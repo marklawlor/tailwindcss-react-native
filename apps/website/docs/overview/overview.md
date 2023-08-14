@@ -63,7 +63,7 @@ You can use the Babel plugin to instantly start writing code! This will also ena
 import { Text } from "react-native";
 
 export function BoldText(props) {
-  return <Text className="text-bold" {...props} />;
+  return <Text className="font-bold" {...props} />;
 }
 ```
 
@@ -76,7 +76,7 @@ import { styled } from "nativewind";
 const StyledText = styled(Text);
 
 export function BoldText(props) {
-  return <StyledText className="text-bold" {...props} />;
+  return <StyledText className="font-bold" {...props} />;
 }
 ```
 
