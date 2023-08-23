@@ -83,7 +83,7 @@ const StyledRect = styled(Rect, {
   classProps: ["fill", "stroke"],
 });
 
-function MyStyledSvg({ stroke, ...props }) {
+function MyStyledSvg({ fill, stroke, ...props }) {
   return (
     <Svg height="100" width="100" {...props}>
       <StyledRect
