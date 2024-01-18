@@ -99,7 +99,7 @@ export default function App() {
 }`,
       babelOptions: { filename: "/someFile.js" },
     },
-    "createELement from 3rd party": {
+    "createElement from 3rd party": {
       code: `import { createElement } from "other-lib";
 export default function App() {
   return createElement("div", {}, "Hello World");
