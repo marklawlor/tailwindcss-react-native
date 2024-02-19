@@ -1,6 +1,6 @@
 # Typescript
 
-NativeWind extends the React Native types via declaration merging. The simplest method to include the types is to create a new `app.d.ts` file and add a [triple-slash directive](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html) referencing the types.
+NativeWind extends the React Native types via declaration merging. The simplest method to include the types is to create a new `global.d.ts` file and add a [triple-slash directive](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html) referencing the types.
 
 ```tsx
 /// <reference types="nativewind/types" />
