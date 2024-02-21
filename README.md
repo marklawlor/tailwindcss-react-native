@@ -9,6 +9,7 @@
 <img alt="npm" src="https://img.shields.io/npm/v/nativewind">
 <img alt="npm" src="https://img.shields.io/npm/dt/nativewind">
 <img alt="GitHub" src="https://img.shields.io/github/license/marklawlor/nativewind">
+<img src="https://img.shields.io/badge/Tailwind-3.3.3-blue">
 </div>
 <br />
 
