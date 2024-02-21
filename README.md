@@ -12,7 +12,7 @@
 </div>
 <br />
 
-`NativeWind` uses [Tailwind CSS](https://tailwindcss.com) as high-level scripting language to create a **universal design system**. Styled components can be shared between all React Native platforms, using the best style engine for that platform (e.g. CSS StyleSheet or StyleSheet.create). It's goals are to to provide a consistent styling experience across all platforms, improving Developer UX, component performance and code maintainability.
+`NativeWind` uses [Tailwind CSS](https://tailwindcss.com) as high-level scripting language to create a **universal design system**. Styled components can be shared between all React Native platforms, using the best style engine for that platform (e.g. CSS StyleSheet or StyleSheet.create). Its goals are to to provide a consistent styling experience across all platforms, improving Developer UX, component performance and code maintainability.
 
 `NativeWind` processes your styles during your application build, and uses a minimal runtime to selectively apply reactive styles (eg changes to device orientation, light dark mode).
 
@@ -33,10 +33,10 @@
 - Small runtime keeps your components fast
 - Babel plugin for **simple setup** and improving **intellisense support**
 - Respects all tailwind.config.js settings, including **themes, custom values, plugins**
-- **dark mode / arbitrary classes / media queries**
-- pseudo classes - **hover / focus / active** on compatible components
-- styling based on **parent state** - automatically style children based upon parent pseudo classes
-- **children styles** - create simple layouts based upon parent class
+- **Dark mode / arbitrary classes / media queries**
+- Pseudo classes - **hover / focus / active** on compatible components
+- Styling based on **parent state** - automatically style children based upon parent pseudo classes
+- **Children styles** - create simple layouts based upon parent class
 
 ## Documentation
 
