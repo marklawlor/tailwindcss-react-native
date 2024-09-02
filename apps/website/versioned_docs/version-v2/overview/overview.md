@@ -2,7 +2,7 @@
 
 ## What is NativeWind?
 
-NativeWind uses [Tailwind CSS](https://tailwindcss.com) as scripting language to create a **universal styling system**. Styled components can be shared between all React Native platforms, using the best style engine for that platform; CSS StyleSheet on web and StyleSheet.create for native. It's goals are to provide a consistent styling experience across all platforms, improving Developer UX, component performance and code maintainability.
+NativeWind uses [Tailwind CSS](https://tailwindcss.com) as scripting language to create a **universal styling system**. Styled components can be shared between all React Native platforms, using the best style engine for that platform; CSS StyleSheet on web and StyleSheet.create for native. Its goals are to provide a consistent styling experience across all platforms, improving Developer UX, component performance and code maintainability.
 
 NativeWind processes your styles during your application's build and uses a minimal runtime to selectively apply responsive styles (eg changes to device orientation, color scheme).
 
