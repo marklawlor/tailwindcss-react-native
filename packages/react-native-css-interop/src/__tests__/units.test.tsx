@@ -1,25 +1,27 @@
-import { act, render } from "@testing-library/react-native";
+/** @jsxImportSource react-native-css-interop */
 import { View } from "react-native";
 
-import { rem, vh, vw } from "../runtime/native/globals";
-import { INTERNAL_SET } from "../shared";
 import {
-  createMockComponent,
   registerCSS,
-  resetStyles,
-} from "../testing-library";
+  screen,
+  act,
+  render,
+  native,
+  INTERNAL_SET,
+  rem,
+  setupAllComponents,
+} from "test-utils";
+
+const { vw, vh } = native;
 
 const testID = "react-native-css-interop";
-const A = createMockComponent(View);
-
-beforeEach(() => resetStyles());
+setupAllComponents();
 
 test("px", () => {
   registerCSS(`.my-class { width: 10px; }`);
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({
     width: 10,
@@ -29,9 +31,8 @@ test("px", () => {
 test("%", () => {
   registerCSS(`.my-class { width: 10%; }`);
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({
     width: "10%",
@@ -41,9 +42,8 @@ test("%", () => {
 test("vw", () => {
   registerCSS(`.my-class { width: 10vw; }`);
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(vw.get()).toEqual(750);
   expect(component).toHaveStyle({ width: 75 });
@@ -59,9 +59,8 @@ test("vw", () => {
 test("vh", () => {
   registerCSS(`.my-class { height: 10vh; }`);
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(vh.get()).toEqual(1334);
   expect(component).toHaveStyle({ height: 133.4 });
@@ -77,9 +76,8 @@ test("vh", () => {
 test("rem - default", () => {
   registerCSS(`.my-class { font-size: 10rem; }`);
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({ fontSize: 140 });
 });
@@ -89,9 +87,8 @@ test("rem - override", () => {
     inlineRem: 10,
   });
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({ fontSize: 100 });
 });
@@ -101,9 +98,8 @@ test("rem - dynamic", () => {
     inlineRem: false,
   });
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(rem.get()).toEqual(14);
   expect(component).toHaveStyle({ fontSize: 140 });

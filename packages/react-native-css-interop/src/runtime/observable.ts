@@ -15,11 +15,13 @@ export type Observable<T> = {
   set(newValue: T): void;
 };
 
+export type ReadableObservable<T> = Pick<Observable<T>, "get" | "name">;
+
 /**
  * An Effect is a function that will be rerun when its dependencies change.
  */
 export type Effect = {
-  rerun: (isRendering?: boolean) => void;
+  run: () => void;
   dependencies: Set<() => void>;
 };
 
@@ -50,15 +52,15 @@ export function observable<T>(
       value = newValue;
       // We changed, so rerun all subscribed effects
       // We need to copy the effects set because rerunning an effect might resubscribe it
-      for (const effect of [...effects]) {
-        effect.rerun();
+      for (const effect of Array.from(effects)) {
+        effect.run();
       }
     },
   };
 }
 
 export function cleanupEffect(effect: Effect) {
-  for (const dep of effect.dependencies) {
+  for (const dep of Array.from(effect.dependencies)) {
     dep();
   }
   effect.dependencies.clear();

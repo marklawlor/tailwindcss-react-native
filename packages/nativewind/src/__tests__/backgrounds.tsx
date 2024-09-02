@@ -1,87 +1,101 @@
-import { resetStyles } from "react-native-css-interop/testing-library";
-import { invalidProperty, invalidValue, style, testCases } from "../test-utils";
-
-afterEach(() => resetStyles());
+import { invalidProperty, invalidValue, testEachClassName } from "../test-utils";
 
 describe("Backgrounds - Background Attachment", () => {
-  testCases(
-    ["bg-fixed", invalidProperty("background-attachment")],
-    // ["bg-local", invalidProperty("background-attachment")],
-    // ["bg-scroll", invalidProperty("background-attachment")],
-  );
+  testEachClassName([
+    [
+      "bg-fixed",
+      undefined,
+      invalidProperty("bg-fixed", "background-attachment"),
+    ],
+    [
+      "bg-local",
+      undefined,
+      invalidProperty("bg-local", "background-attachment"),
+    ],
+    [
+      "bg-scroll",
+      undefined,
+      invalidProperty("bg-local", "background-attachment"),
+    ],
+  ]);
 });
 
 describe("Backgrounds - Background Clip", () => {
-  testCases(
-    ["bg-clip-border", invalidProperty("background-clip")],
-    ["bg-clip-padding", invalidProperty("background-clip")],
-    ["bg-clip-content", invalidProperty("background-clip")],
-    ["bg-clip-text", invalidProperty("background-clip")],
-  );
+  testEachClassName([
+    ["bg-clip-border", undefined, invalidProperty("background-clip")],
+    ["bg-clip-padding", undefined, invalidProperty("background-clip")],
+    ["bg-clip-content", undefined, invalidProperty("background-clip")],
+    ["bg-clip-text", undefined, invalidProperty("background-clip")],
+  ]);
 });
 
 describe("Backgrounds - Background Color", () => {
-  testCases(
-    ["bg-current", invalidValue("background-color", "currentcolor")],
-    ["bg-transparent", style({ backgroundColor: "rgba(0, 0, 0, 0)" })],
+  testEachClassName([
+    [
+      "bg-current",
+      undefined,
+      invalidValue({ "background-color": "currentcolor" }),
+    ],
+    ["bg-transparent", { style: { backgroundColor: "rgba(0, 0, 0, 0)" } }],
     [
       "bg-white",
       {
-        style: { backgroundColor: "rgba(255, 255, 255, 1)" },
+        style: {
+          backgroundColor: "rgba(255, 255, 255, 1)",
+        },
       },
     ],
-  );
+  ]);
 });
 
 describe("Backgrounds - Background Origin", () => {
-  testCases(
-    ["bg-origin-border", invalidProperty("background-origin")],
-    ["bg-origin-padding", invalidProperty("background-origin")],
-    ["bg-origin-content", invalidProperty("background-origin")],
-  );
+  testEachClassName([
+    ["bg-origin-border", undefined, invalidProperty("background-origin")],
+    ["bg-origin-padding", undefined, invalidProperty("background-origin")],
+    ["bg-origin-content", undefined, invalidProperty("background-origin")],
+  ]);
 });
 
 describe("Backgrounds - Background Position", () => {
-  testCases(
-    ["bg-bottom", invalidProperty("background-position")],
-    ["bg-center", invalidProperty("background-position")],
-    ["bg-left", invalidProperty("background-position")],
-    ["bg-left-bottom", invalidProperty("background-position")],
-    ["bg-left-top", invalidProperty("background-position")],
-    ["bg-right", invalidProperty("background-position")],
-    ["bg-right-bottom", invalidProperty("background-position")],
-    ["bg-right-top", invalidProperty("background-position")],
-    ["bg-top", invalidProperty("background-position")],
-  );
+  testEachClassName([
+    ["bg-bottom", undefined, invalidProperty("background-position")],
+    ["bg-center", undefined, invalidProperty("background-position")],
+    ["bg-left", undefined, invalidProperty("background-position")],
+    ["bg-left-bottom", undefined, invalidProperty("background-position")],
+    ["bg-left-top", undefined, invalidProperty("background-position")],
+    ["bg-right", undefined, invalidProperty("background-position")],
+    ["bg-right-bottom", undefined, invalidProperty("background-position")],
+    ["bg-right-top", undefined, invalidProperty("background-position")],
+    ["bg-top", undefined, invalidProperty("background-position")],
+  ]);
 });
 
 describe("Backgrounds - Background Repeat", () => {
-  testCases(["bg-repeat", invalidProperty("background-repeat")]);
+  testEachClassName([["bg-repeat", undefined, invalidProperty("background-repeat")]]);
 });
 
 describe("Backgrounds - Background Size", () => {
-  testCases(
-    ["bg-auto", invalidProperty("background-size")],
-    ["bg-cover", invalidProperty("background-size")],
-    ["bg-contain", invalidProperty("background-size")],
-  );
+  testEachClassName([
+    ["bg-auto", undefined, invalidProperty("background-size")],
+    ["bg-cover", undefined, invalidProperty("background-size")],
+    ["bg-contain", undefined, invalidProperty("background-size")],
+  ]);
 });
 
 describe("Backgrounds - Background Image", () => {
-  testCases(
-    ["bg-none", invalidProperty("background-image")],
-    ["bg-gradient-to-t", invalidProperty("background-image")],
-    ["bg-gradient-to-tr", invalidProperty("background-image")],
-    ["bg-gradient-to-r", invalidProperty("background-image")],
-    ["bg-gradient-to-br", invalidProperty("background-image")],
-    ["bg-gradient-to-b", invalidProperty("background-image")],
-    ["bg-gradient-to-bl", invalidProperty("background-image")],
-    ["bg-gradient-to-l", invalidProperty("background-image")],
-    ["bg-gradient-to-tl", invalidProperty("background-image")],
-  );
+  testEachClassName([
+    ["bg-none", undefined, invalidProperty("background-image")],
+    ["bg-gradient-to-t", undefined, invalidProperty("background-image")],
+    ["bg-gradient-to-tr", undefined, invalidProperty("background-image")],
+    ["bg-gradient-to-r", undefined, invalidProperty("background-image")],
+    ["bg-gradient-to-br", undefined, invalidProperty("background-image")],
+    ["bg-gradient-to-b", undefined, invalidProperty("background-image")],
+    ["bg-gradient-to-bl", undefined, invalidProperty("background-image")],
+    ["bg-gradient-to-l", undefined, invalidProperty("background-image")],
+    ["bg-gradient-to-tl", undefined, invalidProperty("background-image")],
+  ]);
 });
 
 describe.skip("Backgrounds - Gradient Color Stops", () => {
   // TODO
-  testCases();
 });

@@ -1,19 +1,16 @@
+/** @jsxImportSource nativewind */
 import { View } from "react-native";
-import { createMockComponent, renderTailwind } from "../test-utils";
-import { resetStyles } from "react-native-css-interop/testing-library";
+import { render } from "../test-utils";
 import { fireEvent, screen } from "@testing-library/react-native";
 
-const A = createMockComponent(View);
 const parentID = "parent";
 const childID = "child";
 
-beforeEach(() => resetStyles());
-
 test("Unnamed containers", async () => {
-  await renderTailwind(
-    <A testID={parentID} className="@container">
-      <A testID={childID} className="@sm:text-white" />
-    </A>,
+  await render(
+    <View testID={parentID} className="@container">
+      <View testID={childID} className="@sm:text-white" />
+    </View>,
   );
 
   let parent = screen.getByTestId(parentID);
@@ -35,10 +32,10 @@ test("Unnamed containers", async () => {
 });
 
 test("Named containers", async () => {
-  await renderTailwind(
-    <A testID={parentID} className="@container/main">
-      <A testID={childID} className="@sm/main:text-white" />
-    </A>,
+  await render(
+    <View testID={parentID} className="@container/main">
+      <View testID={childID} className="@sm/main:text-white" />
+    </View>,
   );
 
   let parent = screen.getByTestId(parentID);

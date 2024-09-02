@@ -101,7 +101,7 @@ export function normalizeSelectors(
       });
     } else if (
       // Matches:  .dark <selector> {}
-      isDarkClassSelector(cssSelector, options)
+      isDarkClassLegacySelector(cssSelector, options)
     ) {
       const [_, __, third, ...rest] = cssSelector;
 
@@ -126,6 +126,27 @@ export function normalizeSelectors(
           ],
         },
       );
+    } else if (
+      // Matches:  <selector>:is(.dark *) {}
+      isDarkClassSelector(cssSelector, options)
+    ) {
+      const [first] = cssSelector;
+
+      normalizeSelectors(extractedStyle, [[first]], options, selectors, {
+        media: [
+          {
+            mediaType: "all",
+            condition: {
+              type: "feature",
+              value: {
+                type: "plain",
+                name: "prefers-color-scheme",
+                value: { type: "ident", value: "dark" },
+              },
+            },
+          },
+        ],
+      });
     } else {
       const selector = reduceSelector(
         {
@@ -379,13 +400,42 @@ function isDarkModeMediaQuery(query?: MediaQuery): boolean {
   );
 }
 
-// Matches:  .dark <selector> {}
+// Matches:  <selector>:is(.dark *)
 function isDarkClassSelector(
   [first, second, third]: Selector,
   options: ExtractRuleOptions,
 ) {
+  if (options.darkMode?.type !== "class" || !options.darkMode.value) {
+    return false;
+  }
+
   return (
-    options.darkMode?.type === "class" &&
+    first &&
+    second &&
+    !third &&
+    first.type === "class" &&
+    second.type === "pseudo-class" &&
+    second.kind === "is" &&
+    second.selectors.length === 1 &&
+    second.selectors[0].length === 3 &&
+    second.selectors[0][0].type === "class" &&
+    second.selectors[0][0].name === options.darkMode.value &&
+    second.selectors[0][1].type === "combinator" &&
+    second.selectors[0][1].value === "descendant" &&
+    second.selectors[0][2].type === "universal"
+  );
+}
+
+// Matches:  .dark <selector> {}
+function isDarkClassLegacySelector(
+  [first, second, third]: Selector,
+  options: ExtractRuleOptions,
+) {
+  if (options.darkMode?.type !== "class" || !options.darkMode.value) {
+    return false;
+  }
+
+  return (
     first &&
     second &&
     third &&

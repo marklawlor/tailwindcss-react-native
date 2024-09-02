@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "react-native-ide",
+      "request": "launch",
+      "name": "React Native IDE panel",
+      "appRoot": "examples/expo-router",
+      "ios": {
+        "configuration": "Debug"
+      },
+      "android": {
+        "buildType": "debug"
+      }
+    }
+  ]
+}

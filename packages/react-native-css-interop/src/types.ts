@@ -27,6 +27,7 @@ import type {
 import type { INTERNAL_FLAGS, INTERNAL_RESET } from "./shared";
 import type { Effect, Observable } from "./runtime/observable";
 import type { SharedValue } from "react-native-reanimated";
+import { SharedState } from "./runtime/native/types";
 
 export interface Effect2 {
   update: () => void;
@@ -92,14 +93,14 @@ export type CssInteropGeneratedProps<T extends EnableCssInteropOptions<any>> = {
     ? T[K] extends undefined | false
       ? never
       : T[K] extends true | string
-      ? K
-      : T extends {
-          target: string | boolean;
-        }
-      ? T["target"] extends true | string
         ? K
-        : never
-      : never
+        : T extends {
+              target: string | boolean;
+            }
+          ? T["target"] extends true | string
+            ? K
+            : never
+          : never
     : never]?: string;
 };
 
@@ -147,7 +148,7 @@ export type StyleDeclaration =
     ]; // Set a delayed value
 
 export type StyleRuleSet = {
-  $$type: "StyleRuleSet";
+  $type: "StyleRuleSet";
   normal?: StyleRule[];
   important?: StyleRule[];
   warnings?: ExtractionWarning[];
@@ -155,6 +156,14 @@ export type StyleRuleSet = {
   variables?: boolean;
   container?: boolean;
   animation?: boolean;
+  active?: boolean;
+  hover?: boolean;
+  focus?: boolean;
+};
+
+export type RemappedClassName = {
+  $type: "RemappedClassName";
+  classNames: string[];
 };
 
 export type RuntimeStyleRule = StyleRule | object;
@@ -166,7 +175,7 @@ export type RuntimeStyleRuleSet = {
 };
 
 export type StyleRule = {
-  $$type: "StyleRule";
+  $type: "StyleRule";
   specificity: Specificity;
   media?: MediaQuery[];
   variables?: Array<[string, RuntimeValueDescriptor]>;
@@ -181,6 +190,10 @@ export type StyleRule = {
   attrs?: AttributeCondition[];
   warnings?: ExtractionWarning[];
 };
+
+export type ProcessedStyleRules =
+  | (StyleRule & Required<Pick<StyleRule, "declarations">>)
+  | Record<string, any>;
 
 export type PropState = Effect & {
   initialRender: boolean;
@@ -303,7 +316,7 @@ export type PseudoClassesQuery = {
 };
 
 export type StyleSheetRegisterCompiledOptions = {
-  $$compiled: true;
+  $compiled: true;
   rules?: [string, StyleRuleSet][];
   keyframes?: [string, ExtractedAnimation][];
   rootVariables?: VariableRecord;
@@ -326,6 +339,7 @@ export type ColorSchemeVariableValue = {
   dark?: RuntimeValueDescriptor;
 };
 export type VariableRecord = Record<string, ColorSchemeVariableValue>;
+export type ContainerRecord = Record<string, SharedState>;
 
 export type Style = ViewStyle & TextStyle & ImageStyle;
 export type StyleProp = Style | StyleProp[] | undefined;

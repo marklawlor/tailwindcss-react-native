@@ -2,7 +2,6 @@ import "../global.css";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
-import { vars } from "nativewind";
 import { memo, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 
@@ -11,15 +10,15 @@ export {
   ErrorBoundary,
 } from "expo-router";
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
-};
+// export const unstable_settings = {
+//   // Ensure that reloading on `/modal` keeps a back button present.
+//   initialRouteName: "(tabs)",
+// };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export default memo(function RootLayout() {
+export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
@@ -41,7 +40,7 @@ export default memo(function RootLayout() {
   }
 
   return <RootLayoutNav />;
-});
+}
 
 function RootLayoutNav() {
   return (

@@ -88,7 +88,7 @@ export const remapProps = cssInterop;
 
 export function useColorScheme() {
   const [effect, setEffect] = useState<Effect>(() => ({
-    rerun: () => setEffect((s) => ({ ...s })),
+    run: () => setEffect((s) => ({ ...s })),
     dependencies: new Set(),
   }));
 

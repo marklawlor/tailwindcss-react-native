@@ -1,17 +1,15 @@
-import { render, screen } from "@testing-library/react-native";
+/** @jsxImportSource react-native-css-interop */
 import { View } from "react-native";
-
 import {
-  createMockComponent,
+  render,
+  screen,
   registerCSS,
-  resetStyles,
-} from "../testing-library";
-import { vars } from "../runtime/api";
+  vars,
+  setupAllComponents,
+} from "test-utils";
 
 const testID = "react-native-css-interop";
-const A = createMockComponent(View);
-
-beforeEach(() => resetStyles());
+setupAllComponents();
 
 test("vars", () => {
   registerCSS(
@@ -21,7 +19,11 @@ test("vars", () => {
   );
 
   render(
-    <A testID={testID} className="my-class" style={vars({ test: "black" })} />,
+    <View
+      testID={testID}
+      className="my-class"
+      style={vars({ test: "black" })}
+    />,
   );
 
   const component = screen.getByTestId(testID);
@@ -31,7 +33,7 @@ test("vars", () => {
   });
 
   screen.rerender(
-    <A
+    <View
       testID={testID + 1}
       className="my-class"
       style={vars({ test: "blue" })}

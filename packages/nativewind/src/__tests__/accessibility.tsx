@@ -1,14 +1,11 @@
-import { resetStyles } from "react-native-css-interop/testing-library";
-import { testCases, style } from "../test-utils";
-
-afterEach(() => resetStyles());
+import { invalidProperty, invalidValue, testEachClassName } from "../test-utils";
 
 describe("Accessibility - Screen Readers", () => {
-  testCases(
+  testEachClassName([
     [
       "sr-only",
       {
-        ...style({
+        style: {
           borderWidth: 0,
           height: 1,
           margin: -1,
@@ -16,66 +13,26 @@ describe("Accessibility - Screen Readers", () => {
           padding: 0,
           position: "absolute",
           width: 1,
-        }),
-        warning: () =>
-          new Map([
-            [
-              "sr-only",
-              [
-                {
-                  property: "clip",
-                  type: "IncompatibleNativeProperty",
-                },
-                {
-                  property: "white-space",
-                  type: "IncompatibleNativeProperty",
-                },
-              ],
-            ],
-          ]),
+        },
       },
+      invalidProperty("sr-only", "clip", "white-space"),
     ],
     [
       "not-sr-only",
       {
-        ...style({
+        style: {
           margin: 0,
           overflow: "visible",
           padding: 0,
-        }),
-
-        warning: () =>
-          new Map([
-            [
-              "not-sr-only",
-              [
-                {
-                  property: "position",
-                  type: "IncompatibleNativeValue",
-                  value: "static",
-                },
-                {
-                  property: "width",
-                  type: "IncompatibleNativeValue",
-                  value: "auto",
-                },
-                {
-                  property: "height",
-                  type: "IncompatibleNativeValue",
-                  value: "auto",
-                },
-                {
-                  property: "clip",
-                  type: "IncompatibleNativeProperty",
-                },
-                {
-                  property: "white-space",
-                  type: "IncompatibleNativeProperty",
-                },
-              ],
-            ],
-          ]),
+        },
       },
+      invalidValue({
+        position: "static",
+        width: "auto",
+        height: "auto",
+        clip: "auto",
+        "white-space": "normal",
+      }),
     ],
-  );
+  ]);
 });

@@ -6,7 +6,8 @@
     "sourceMap": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "./types.d.ts"
   ],
   "exclude": [
     "cli/*",

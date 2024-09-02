@@ -1,106 +1,10 @@
-import { render } from "@testing-library/react-native";
+/** @jsxImportSource react-native-css-interop */
 import { View } from "react-native";
 
-import {
-  createMockComponent,
-  registerCSS,
-  resetStyles,
-} from "../testing-library";
-import { vars } from "../runtime";
-import { calc } from "../runtime/native/resolve-value";
-import { PropState } from "../runtime/native/native-interop";
+import { vars, render, registerCSS, setupAllComponents } from "test-utils";
 
 const testID = "react-native-css-interop";
-const A = createMockComponent(View);
-
-function getState(variables = {}): PropState {
-  return {
-    upgrades: {},
-    interaction: {},
-    tracking: {
-      changed: false,
-      index: 0,
-      rules: [],
-    },
-    declarationEffect: {
-      dependencies: new Set(),
-      rerun() {},
-    },
-    styleEffect: {
-      dependencies: new Set(),
-      rerun() {},
-    },
-    refs: { props: {}, containers: {}, variables },
-    sharedValues: new Map(),
-    animationNames: new Set(),
-    target: "style",
-    source: "style",
-  };
-}
-
-beforeEach(() => resetStyles());
-
-test("1 + 1", () => {
-  expect(calc(getState(), [1, "+", 1], {})).toBe(2);
-});
-
-test("1 - 1", () => {
-  expect(calc(getState(), [1, "-", 1], {})).toBe(0);
-});
-
-test("2 * 2", () => {
-  expect(calc(getState(), [2, "*", 2], {})).toBe(4);
-});
-
-test("2 / 2", () => {
-  expect(calc(getState(), [2, "/", 2], {})).toBe(1);
-});
-
-test("1 + 5 / 2", () => {
-  expect(calc(getState(), [1, "+", 5, "/", 2], {})).toBe(3.5);
-});
-
-test("(1 + 5) / 2", () => {
-  expect(calc(getState(), ["(", 1, "+", 5, ")", "/", 2], {})).toBe(3);
-});
-
-test("var(--number) + 1", () => {
-  expect(
-    calc(
-      getState({
-        "--number": "2px",
-      }),
-      [
-        {
-          name: "var",
-          arguments: ["--number"],
-        },
-        "+",
-        1,
-      ],
-      {},
-    ),
-  ).toBe(3);
-});
-
-test("var(--percent) + 10%", () => {
-  expect(
-    calc(
-      getState({
-        "--percent": "20%",
-      }),
-      [
-        {
-          name: "var",
-          arguments: ["--percent"],
-        },
-        "+",
-        "10%",
-      ],
-      {},
-    ),
-  ).toBe("30%");
-});
+setupAllComponents();
 
 describe("css", () => {
   test("calc(10px + 100px)", () => {
@@ -111,7 +15,7 @@ describe("css", () => {
     );
 
     const component = render(
-      <A testID={testID} className="my-class" />,
+      <View testID={testID} className="my-class" />,
     ).getByTestId(testID);
 
     expect(component).toHaveStyle({
@@ -128,7 +32,7 @@ describe("css", () => {
     );
 
     const component = render(
-      <A testID={testID} className="my-class" />,
+      <View testID={testID} className="my-class" />,
     ).getByTestId(testID);
 
     expect(component).toHaveStyle(undefined);
@@ -144,7 +48,7 @@ describe("css", () => {
     );
 
     const component = render(
-      <A testID={testID} className="my-class" />,
+      <View testID={testID} className="my-class" />,
     ).getByTestId(testID);
 
     expect(component).toHaveStyle({
@@ -161,7 +65,7 @@ describe("css", () => {
     );
 
     const component = render(
-      <A testID={testID} className="my-class" />,
+      <View testID={testID} className="my-class" />,
     ).getByTestId(testID);
 
     expect(component).toHaveStyle({
@@ -177,7 +81,7 @@ describe("css", () => {
     );
 
     const component = render(
-      <A
+      <View
         testID={testID}
         className="my-class"
         style={vars({
@@ -199,7 +103,7 @@ describe("css", () => {
     );
 
     const component = render(
-      <A
+      <View
         testID={testID}
         className="my-class"
         style={vars({
@@ -226,7 +130,7 @@ test("calc & colors", () => {
   );
 
   const component = render(
-    <A
+    <View
       testID={testID}
       className="my-class"
       style={vars({

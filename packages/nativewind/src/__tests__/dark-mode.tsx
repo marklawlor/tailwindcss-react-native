@@ -1,19 +1,17 @@
+/** @jsxImportSource nativewind */
 import { View } from "react-native";
-import { createMockComponent, renderTailwind } from "../test-utils";
+import { colorScheme, render } from "../test-utils";
 import { act, screen } from "@testing-library/react-native";
-import { resetStyles } from "react-native-css-interop/testing-library";
-import { colorScheme } from "react-native-css-interop";
 
 const testID = "react-native-css-interop";
-const A = createMockComponent(View);
-
-beforeEach(() => resetStyles());
 
 test("darkMode: media", async () => {
-  await renderTailwind(<A testID={testID} className="dark:text-black" />, {
-    base: true,
+  await render(<View testID={testID} className="dark:text-black" />, {
     config: {
       darkMode: "media",
+    },
+    layers: {
+      base: true,
     },
   });
 
@@ -27,24 +25,24 @@ test("darkMode: media", async () => {
 });
 
 test("darkMode: media variable switching", async () => {
-  await renderTailwind(
-    <A testID={testID} className="text-[color:rgb(var(--color))]" />,
+  await render(
+    <View testID={testID} className="text-[color:rgb(var(--color))]" />,
     {
       css: `
-          @tailwind base;
-          @tailwind components;
-          @tailwind utilities;
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
 
-          @layer base {
+        @layer base {
+          :root {
+            --color: 255 115 179;
+          }
+          @media (prefers-color-scheme: dark) {
             :root {
-              --color: 255 115 179;
+              --color: 155 100 255;
             }
-            @media (prefers-color-scheme: dark) {
-              :root {
-                --color: 155 100 255;
-              }
-            }
-          }`,
+          }
+        }`,
     },
   );
 
@@ -59,10 +57,12 @@ test("darkMode: media variable switching", async () => {
 });
 
 test("darkMode: class", async () => {
-  await renderTailwind(<A testID={testID} className="dark:text-black" />, {
-    base: true,
+  await render(<View testID={testID} className="dark:text-black" />, {
     config: {
       darkMode: "class",
+    },
+    layers: {
+      base: true,
     },
   });
 
@@ -76,10 +76,12 @@ test("darkMode: class", async () => {
 });
 
 test("darkMode: class - on custom prop", async () => {
-  await renderTailwind(<A testID={testID} className="dark:fill-black" />, {
-    base: true,
+  await render(<View testID={testID} className="dark:fill-black" />, {
     config: {
       darkMode: "class",
+    },
+    layers: {
+      base: true,
     },
   });
 
@@ -95,8 +97,8 @@ test("darkMode: class - on custom prop", async () => {
 });
 
 test("darkMode: class variable switching", async () => {
-  await renderTailwind(
-    <A testID={testID} className="text-[color:rgb(var(--color))]" />,
+  await render(
+    <View testID={testID} className="text-[color:rgb(var(--color))]" />,
     {
       css: `
           @tailwind base;

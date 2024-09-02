@@ -1,8 +1,5 @@
-import { resetStyles } from "react-native-css-interop/testing-library";
-import { style, testCases } from "../test-utils";
-
-afterEach(() => resetStyles());
+import { testEachClassName } from "../test-utils";
 
 describe("Preset - color-*", () => {
-  testCases(["color-black", style({ color: "rgba(0, 0, 0, 1)" })]);
+  testEachClassName([["color-black", { style: { color: "rgba(0, 0, 0, 1)" } }]]);
 });

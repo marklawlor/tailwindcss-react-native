@@ -1,75 +1,62 @@
-import { resetStyles } from "react-native-css-interop/testing-library";
-import { style, testCasesWithOptions } from "../test-utils";
-
-afterEach(() => resetStyles());
+import { testEachClassName } from "../test-utils";
 
 /** TODO Rewrite these tests to actually test the properties, not what they just compile to */
 
 describe.skip("Transitions & Animation - Transition Property", () => {
-  testCasesWithOptions(
+  testEachClassName(
+    [
+      // TODO: Add tests for all transition properties
+      // "transition-none",
+      // "transition-all",
+      // "transition",
+      // "transition-colors",
+      // "transition-opacity",
+      // "transition-shadow",
+      // "transition-transform",
+      [
+        "transition-colors",
+        {
+          style: {
+            backgroundColor: "transparent",
+            borderColor: "transparent",
+            color: "transparent",
+          },
+        },
+      ],
+      [
+        "transition-opacity",
+        {
+          style: {
+            opacity: 1,
+          },
+        },
+      ],
+    ],
     {
-      animated: true,
+      animatedStyle: true,
     },
-    // TODO: Add tests for all transition properties
-    // "transition-none",
-    // "transition-all",
-    // "transition",
-    // "transition-colors",
-    // "transition-opacity",
-    // "transition-shadow",
-    // "transition-transform",
-    [
-      "transition-colors",
-      style({
-        backgroundColor: "transparent",
-        borderColor: "transparent",
-        color: "transparent",
-      }),
-    ],
-    [
-      "transition-opacity",
-      style({
-        opacity: 1,
-      }),
-    ],
   );
 });
 
 describe.skip("Transitions & Animation - Transition Duration", () => {
-  testCasesWithOptions(
-    {
-      animated: true,
-    },
-    ["duration-75", {}],
-  );
+  testEachClassName([["duration-75", {}]]);
 });
 
 describe.skip("Transitions & Animation - Transition Timing Function", () => {
-  testCasesWithOptions(
-    {
-      animated: true,
-    },
+  testEachClassName([
     ["ease-linear", {}],
     ["ease-in", {}],
     ["ease-out", {}],
     ["ease-in-out", {}],
-  );
+  ]);
 });
 
 describe.skip("Transitions & Animation - Transition Delay", () => {
-  testCasesWithOptions(
-    {
-      animated: true,
-    },
-    ["delay-0", {}],
-  );
+  testEachClassName([["delay-0", {}]]);
 });
 
 describe.skip("Transitions & Animation - Animation", () => {
-  testCasesWithOptions(
-    {
-      animated: true,
-    },
+  testEachClassName([
     [
       // TODO:
       // "animate-ping",
@@ -81,18 +68,20 @@ describe.skip("Transitions & Animation - Animation", () => {
     ],
     [
       "animate-spin",
-      style({
-        transform: [{ rotate: "0deg" }],
-      }),
+      {
+        style: {
+          transform: [{ rotate: "0deg" }],
+        },
+      },
     ],
     // [
     //   "animate-ping",
     //   {
-    //     style: {
+    //     { style:  {
     //       opacity: NaN,
     //       transform: [{ scaleX: 1 }, { scaleY: 1 }],
     //     },
     //   },
     // ],
-  );
+  ]);
 });

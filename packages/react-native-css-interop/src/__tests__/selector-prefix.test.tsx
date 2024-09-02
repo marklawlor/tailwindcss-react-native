@@ -1,16 +1,10 @@
-import { render } from "@testing-library/react-native";
+/** @jsxImportSource react-native-css-interop */
 import { View } from "react-native";
 
-import {
-  createMockComponent,
-  registerCSS,
-  resetStyles,
-} from "../testing-library";
+import { render, registerCSS, setupAllComponents } from "test-utils";
 
 const testID = "react-native-css-interop";
-const A = createMockComponent(View);
-
-beforeEach(() => resetStyles());
+setupAllComponents();
 
 test("type prefix", () => {
   registerCSS(`html .my-class { color: red; }`, {
@@ -18,7 +12,7 @@ test("type prefix", () => {
   });
 
   const component = render(
-    <A testID={testID} className="my-class" />,
+    <View testID={testID} className="my-class" />,
   ).getByTestId(testID);
 
   expect(component).toHaveStyle({
@@ -32,7 +26,7 @@ test("class prefix", () => {
   });
 
   const component = render(
-    <A testID={testID} className="my-class" />,
+    <View testID={testID} className="my-class" />,
   ).getByTestId(testID);
 
   expect(component).toHaveStyle({

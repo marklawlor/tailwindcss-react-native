@@ -1,15 +1,12 @@
+/** @jsxImportSource nativewind */
 import { View } from "react-native";
-import { createMockComponent, renderTailwind } from "../test-utils";
+import { render } from "../test-utils";
 import { screen } from "@testing-library/react-native";
-import { resetStyles } from "react-native-css-interop/testing-library";
 
 const testID = "react-native-css-interop";
-const A = createMockComponent(View);
-
-beforeEach(() => resetStyles());
 
 test("@apply", async () => {
-  await renderTailwind(<A testID={testID} className="btn-primary" />, {
+  await render(<View testID={testID} className="btn-primary" />, {
     css: `
 @tailwind base;
 @tailwind components;

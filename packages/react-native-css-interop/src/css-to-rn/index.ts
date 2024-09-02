@@ -98,7 +98,7 @@ export function cssToReactNativeRuntime(
   for (const [name, styles] of extractOptions.rules) {
     if (styles.length === 0) continue;
 
-    const styleRuleSet: StyleRuleSet = { $$type: "StyleRuleSet" };
+    const styleRuleSet: StyleRuleSet = { $type: "StyleRuleSet" };
 
     for (const { warnings, ...style } of styles) {
       if (style.specificity.I) {
@@ -118,6 +118,9 @@ export function cssToReactNativeRuntime(
       if (style.container) styleRuleSet.container = true;
       if (style.animations) styleRuleSet.animation = true;
       if (style.transition) styleRuleSet.animation = true;
+      if (style.pseudoClasses?.active) styleRuleSet.active = true;
+      if (style.pseudoClasses?.hover) styleRuleSet.hover = true;
+      if (style.pseudoClasses?.focus) styleRuleSet.focus = true;
     }
 
     rules.push([name, styleRuleSet]);
@@ -125,7 +128,7 @@ export function cssToReactNativeRuntime(
 
   // Convert the extracted style declarations and animations from maps to objects and return them
   return {
-    $$compiled: true,
+    $compiled: true,
     rules: optimizeRules(rules),
     keyframes: Array.from(extractOptions.keyframes.entries()),
     rootVariables: extractOptions.rootVariables,
@@ -405,7 +408,7 @@ function setStyleForSelectorList(
       if (groupClassName) {
         // Add the conditions to the declarations object
         addDeclaration(declarations, groupClassName, {
-          $$type: "StyleRule",
+          $type: "StyleRule",
           specificity,
           attrs,
           declarations: [],
@@ -501,10 +504,10 @@ function extractKeyFrames(
         selector.type === "percentage"
           ? selector.value * 100
           : selector.type === "from"
-          ? 0
-          : selector.type === "to"
-          ? 100
-          : undefined;
+            ? 0
+            : selector.type === "to"
+              ? 100
+              : undefined;
 
       if (keyframe === undefined) continue;
 
@@ -616,7 +619,7 @@ function declarationsToStyle(
 ): StyleRule {
   const props: NonNullable<StyleRule["declarations"]> = [];
   const extractedStyle: StyleRule = {
-    $$type: "StyleRule",
+    $type: "StyleRule",
     specificity: { A: 0, B: 0, C: 0, ...specificity },
     declarations: props,
   };

@@ -5,5 +5,10 @@
     "noUnusedLocals": true,
     "removeComments": true,
     "esModuleInterop": true,
+    "paths": {
+      "react-native-css-interop/jsx-runtime": [
+        "./node_modules/react-native-css-interop/jsx-runtime"
+      ]
+    }
   }
 }

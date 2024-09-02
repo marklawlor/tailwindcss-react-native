@@ -1,26 +1,19 @@
-import { render } from "@testing-library/react-native";
+/** @jsxImportSource react-native-css-interop */
 import { View } from "react-native";
 
-import {
-  createMockComponent,
-  registerCSS,
-  resetStyles,
-} from "../testing-library";
+import { render, screen, registerCSS, setupAllComponents } from "test-utils";
 
 const testID = "react-native-css-interop";
-const A = createMockComponent(View);
-
-beforeEach(() => resetStyles());
+setupAllComponents();
 
 describe("hsl", () => {
   test("inline", () => {
-    registerCSS(`.my-class { 
-    color: hsl(0 84.2% 60.2%); 
+    registerCSS(`.my-class {
+    color: hsl(0 84.2% 60.2%);
   }`);
 
-    const component = render(
-      <A testID={testID} className="my-class" />,
-    ).getByTestId(testID);
+    render(<View testID={testID} className="my-class" />);
+    const component = screen.getByTestId(testID);
 
     expect(component).toHaveStyle({
       color: "rgba(239, 68, 68, 1)",
@@ -28,12 +21,12 @@ describe("hsl", () => {
   });
 
   test("inline with comma", () => {
-    registerCSS(`.my-class { 
-    color: hsl(0, 84.2%, 60.2%); 
+    registerCSS(`.my-class {
+    color: hsl(0, 84.2%, 60.2%);
   }`);
 
     const component = render(
-      <A testID={testID} className="my-class" />,
+      <View testID={testID} className="my-class" />,
     ).getByTestId(testID);
 
     expect(component).toHaveStyle({
@@ -42,27 +35,25 @@ describe("hsl", () => {
   });
 
   test("var with spaces", () => {
-    registerCSS(`.my-class { 
+    registerCSS(`.my-class {
     --primary: 0 84.2% 60.2%;
-    color: hsl(var(--primary)); 
+    color: hsl(var(--primary));
   }`);
 
-    const component = render(
-      <A testID={testID} className="my-class" />,
-    ).getByTestId(testID);
+    render(<View testID={testID} className="my-class" />);
+    const component = screen.getByTestId(testID);
 
     expect(component).toHaveStyle({ color: "hsl(0, 84.2%, 60.2%)" });
   });
 
   test("var with comma", () => {
-    registerCSS(`.my-class { 
+    registerCSS(`.my-class {
     --primary: 0, 84.2%, 60.2%;
-    color: hsl(var(--primary)); 
+    color: hsl(var(--primary));
   }`);
 
-    const component = render(
-      <A testID={testID} className="my-class" />,
-    ).getByTestId(testID);
+    render(<View testID={testID} className="my-class" />);
+    const component = screen.getByTestId(testID);
 
     expect(component).toHaveStyle({ color: "hsl(0, 84.2%, 60.2%)" });
   });
@@ -70,13 +61,12 @@ describe("hsl", () => {
 
 describe("hsla", () => {
   test("inline with slash", () => {
-    registerCSS(`.my-class { 
-    color: hsla(0 84.2% 60.2% / 60%); 
+    registerCSS(`.my-class {
+    color: hsla(0 84.2% 60.2% / 60%);
   }`);
 
-    const component = render(
-      <A testID={testID} className="my-class" />,
-    ).getByTestId(testID);
+    render(<View testID={testID} className="my-class" />);
+    const component = screen.getByTestId(testID);
 
     expect(component).toHaveStyle({
       color: "rgba(239, 68, 68, 0.6000000238418579)",
@@ -84,13 +74,12 @@ describe("hsla", () => {
   });
 
   test("inline with comma", () => {
-    registerCSS(`.my-class { 
-    color: hsla(0, 84.2%, 60.2%, 60%); 
+    registerCSS(`.my-class {
+    color: hsla(0, 84.2%, 60.2%, 60%);
   }`);
 
-    const component = render(
-      <A testID={testID} className="my-class" />,
-    ).getByTestId(testID);
+    render(<View testID={testID} className="my-class" />);
+    const component = screen.getByTestId(testID);
 
     expect(component).toHaveStyle({
       color: "rgba(239, 68, 68, 0.6000000238418579)",
@@ -98,27 +87,25 @@ describe("hsla", () => {
   });
 
   test("function with slash", () => {
-    registerCSS(`.my-class { 
+    registerCSS(`.my-class {
     --primary: 0 84.2% 60.2% / 60%;
-    color: hsla(var(--primary)); 
+    color: hsla(var(--primary));
   }`);
 
-    const component = render(
-      <A testID={testID} className="my-class" />,
-    ).getByTestId(testID);
+    render(<View testID={testID} className="my-class" />);
+    const component = screen.getByTestId(testID);
 
     expect(component).toHaveStyle({ color: "hsla(0, 84.2%, 60.2%, 60%)" });
   });
 
   test("function with comma", () => {
-    registerCSS(`.my-class { 
+    registerCSS(`.my-class {
     --primary: 0, 84.2%, 60.2%, 60%;
-    color: hsla(var(--primary)); 
+    color: hsla(var(--primary));
   }`);
 
-    const component = render(
-      <A testID={testID} className="my-class" />,
-    ).getByTestId(testID);
+    render(<View testID={testID} className="my-class" />);
+    const component = screen.getByTestId(testID);
 
     expect(component).toHaveStyle({ color: "hsla(0, 84.2%, 60.2%, 60%)" });
   });

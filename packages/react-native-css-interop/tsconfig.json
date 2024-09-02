@@ -7,7 +7,12 @@
     ],
     "outDir": "dist",
     "noEmit": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "paths": {
+      "test-utils": [
+        "./src/utils/test-utils"
+      ]
+    }
   },
   "include": [
     "src/**/*",

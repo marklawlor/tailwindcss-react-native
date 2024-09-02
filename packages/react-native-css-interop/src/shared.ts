@@ -1,6 +1,6 @@
-export const INTERNAL_RESET = Symbol();
-export const INTERNAL_SET = Symbol();
-export const INTERNAL_FLAGS = Symbol();
+export const INTERNAL_RESET: unique symbol = Symbol();
+export const INTERNAL_SET: unique symbol = Symbol();
+export const INTERNAL_FLAGS: unique symbol = Symbol();
 
 export const DEFAULT_CONTAINER_NAME = "@__";
 

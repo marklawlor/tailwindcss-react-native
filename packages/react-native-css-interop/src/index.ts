@@ -10,6 +10,7 @@ export {
   colorScheme,
   useColorScheme,
   useUnstableNativeVariable,
+  useSafeAreaEnv,
   vars,
   rem,
 } from "./runtime";

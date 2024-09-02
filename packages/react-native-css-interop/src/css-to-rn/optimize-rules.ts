@@ -18,7 +18,7 @@ export function optimizeRules(
 
     if (ruleSet.normal) {
       for (const rule of ruleSet.normal) {
-        // Static styles only have $$type & declarations
+        // Static styles only have $type & declarations
         if (!("declarations" in rule) || Object.keys(rules).length > 2) {
           continue;
         }

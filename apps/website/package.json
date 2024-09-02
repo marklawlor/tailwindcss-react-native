@@ -25,7 +25,7 @@
     "react-native-css-interop": "0.0.36",
     "react-twitter-embed": "4.0.4",
     "sass": "1.69.5",
-    "tailwindcss": "3.4.1"
+    "tailwindcss": "3.4.4"
   },
   "browserslist": {
     "production": [

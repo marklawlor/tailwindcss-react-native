@@ -1,4 +1,3 @@
-import { expect } from "@jest/globals";
 import matchers from "expect/build/matchers";
 
 // I do not know why this is needed

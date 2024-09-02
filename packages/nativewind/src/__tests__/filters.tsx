@@ -1,90 +1,107 @@
-import { resetStyles } from "react-native-css-interop/testing-library";
-import { invalidProperty, testCases } from "../test-utils";
-
-afterEach(() => resetStyles());
+import { invalidProperty, testEachClassName } from "../test-utils";
 
 describe("Filters - Blur", () => {
-  testCases(["blur", invalidProperty("filter")]);
+  testEachClassName([["blur", undefined, invalidProperty("filter")]]);
 });
 
 describe("Filters - Brightness", () => {
-  testCases(["brightness-0", invalidProperty("filter")]);
+  testEachClassName([["brightness-0", undefined, invalidProperty("filter")]]);
 });
 
 describe("Filters - Contrast", () => {
-  testCases(["contrast-0", invalidProperty("filter")]);
-  testCases(["contrast-50", invalidProperty("filter")]);
-  testCases(["contrast-200", invalidProperty("filter")]);
+  testEachClassName([
+    ["contrast-0", undefined, invalidProperty("filter")],
+    ["contrast-50", undefined, invalidProperty("filter")],
+    ["contrast-200", undefined, invalidProperty("filter")],
+  ]);
 });
 
 describe("Filters - Drop Shadow", () => {
-  testCases(["drop-shadow", invalidProperty("filter")]);
+  testEachClassName([["drop-shadow", undefined, invalidProperty("filter")]]);
 });
 
 describe("Filters - Grayscale", () => {
-  testCases(
-    ["grayscale", invalidProperty("filter")],
-    ["grayscale-0", invalidProperty("filter")],
-  );
+  testEachClassName([
+    ["grayscale", undefined, invalidProperty("filter")],
+    ["grayscale-0", undefined, invalidProperty("filter")],
+  ]);
 });
 
 describe("Filters - Hue Rotate", () => {
-  testCases(
-    ["hue-rotate-0", invalidProperty("filter")],
-    ["hue-rotate-180", invalidProperty("filter")],
-  );
+  testEachClassName([
+    ["hue-rotate-0", undefined, invalidProperty("filter")],
+    ["hue-rotate-180", undefined, invalidProperty("filter")],
+  ]);
 });
 
 describe("Filters - Invert", () => {
-  testCases(
-    ["invert-0", invalidProperty("filter")],
-    ["invert", invalidProperty("filter")],
-  );
+  testEachClassName([
+    ["invert-0", undefined, invalidProperty("filter")],
+    ["invert", undefined, invalidProperty("filter")],
+  ]);
 });
 
 describe("Filters - Saturate", () => {
-  testCases(
-    ["saturate-0", invalidProperty("filter")],
-    ["saturate-100", invalidProperty("filter")],
-  );
+  testEachClassName([
+    ["saturate-0", undefined, invalidProperty("filter")],
+    ["saturate-100", undefined, invalidProperty("filter")],
+  ]);
 });
 
 describe("Filters - Sepia", () => {
-  testCases(["sepia", invalidProperty("filter")]);
+  testEachClassName([["sepia", undefined, invalidProperty("filter")]]);
 });
 
 describe("Filters - Backdrop Blur", () => {
-  testCases(["backdrop-blur-none", invalidProperty("backdrop-filter")]);
+  testEachClassName([
+    ["backdrop-blur-none", undefined, invalidProperty("backdrop-filter")],
+  ]);
 });
 
 describe("Filters - Backdrop Brightness", () => {
-  testCases(["backdrop-brightness-0", invalidProperty("backdrop-filter")]);
+  testEachClassName([
+    ["backdrop-brightness-0", undefined, invalidProperty("backdrop-filter")],
+  ]);
 });
 
 describe("Filters - Backdrop Contrast", () => {
-  testCases(["backdrop-contrast-0", invalidProperty("backdrop-filter")]);
+  testEachClassName([
+    ["backdrop-contrast-0", undefined, invalidProperty("backdrop-filter")],
+  ]);
 });
 
 describe("Filters - Backdrop Grayscale", () => {
-  testCases(["backdrop-grayscale-0", invalidProperty("backdrop-filter")]);
+  testEachClassName([
+    ["backdrop-grayscale-0", undefined, invalidProperty("backdrop-filter")],
+  ]);
 });
 
 describe("Filters - Backdrop Hue Rotate", () => {
-  testCases(["backdrop-hue-rotate-0", invalidProperty("backdrop-filter")]);
+  testEachClassName([
+    ["backdrop-hue-rotate-0", undefined, invalidProperty("backdrop-filter")],
+  ]);
 });
 
 describe("Filters - Backdrop Invert", () => {
-  testCases(["backdrop-invert-0", invalidProperty("backdrop-filter")]);
+  testEachClassName([
+    ["backdrop-invert-0", undefined, invalidProperty("backdrop-filter")],
+  ]);
 });
 
 describe("Filters - Backdrop Opacity", () => {
-  testCases(["backdrop-opacity-0", invalidProperty("backdrop-filter")]);
+  testEachClassName([
+    ["backdrop-opacity-0", undefined, invalidProperty("backdrop-filter")],
+  ]);
 });
 
 describe("Filters - Backdrop Saturate", () => {
-  testCases(["backdrop-saturate-0", invalidProperty("backdrop-filter")]);
+  testEachClassName([
+    ["backdrop-saturate-0", undefined, invalidProperty("backdrop-filter")],
+  ]);
 });
 
 describe("Filters - Backdrop Sepia", () => {
-  testCases(["backdrop-sepia-0", invalidProperty("backdrop-filter")]);
+  testEachClassName([
+    ["backdrop-sepia-0", undefined, invalidProperty("backdrop-filter")],
+  ]);
 });

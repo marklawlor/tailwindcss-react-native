@@ -1,16 +1,10 @@
-import { render } from "@testing-library/react-native";
+/** @jsxImportSource react-native-css-interop */
 import { StyleSheet as RNStyleSheet, View } from "react-native";
 
-import {
-  createMockComponent,
-  registerCSS,
-  resetStyles,
-} from "../testing-library";
+import { render, screen, registerCSS, setupAllComponents } from "test-utils";
 
 const testID = "react-native-css-interop";
-const A = createMockComponent(View);
-
-beforeEach(() => resetStyles());
+setupAllComponents();
 
 test("platformSelect", () => {
   registerCSS(
@@ -21,9 +15,8 @@ test("platformSelect", () => {
       }`,
   );
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({
     color: "black",
@@ -38,9 +31,8 @@ test("hairlineWidth", () => {
       }`,
   );
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({
     width: RNStyleSheet.hairlineWidth,
@@ -54,9 +46,8 @@ test("max", () => {
     }`,
   );
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({ width: 10 });
 });
@@ -68,9 +59,8 @@ test("min", () => {
     }`,
   );
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({ width: 1 });
 });
@@ -82,9 +72,8 @@ test("clamp - value", () => {
     }`,
   );
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({ width: 5 });
 });
@@ -96,9 +85,8 @@ test("clamp - min", () => {
     }`,
   );
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({ width: 1 });
 });
@@ -110,9 +98,8 @@ test("clamp - max", () => {
     }`,
   );
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({ width: 10 });
 });
@@ -124,9 +111,8 @@ test("mixed", () => {
     }`,
   );
 
-  const component = render(
-    <A testID={testID} className="my-class" />,
-  ).getByTestId(testID);
+  render(<View testID={testID} className="my-class" />);
+  const component = screen.getByTestId(testID);
 
   expect(component).toHaveStyle({
     color: {

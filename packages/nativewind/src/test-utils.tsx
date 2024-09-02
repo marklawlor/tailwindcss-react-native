@@ -1,40 +1,56 @@
-import { Platform, ViewStyle, ImageStyle, TextStyle, View } from "react-native";
-import { RenderOptions, render, screen } from "@testing-library/react-native";
+/** @jsxImportSource nativewind */
+import { View, Platform } from "react-native";
 import tailwindcssContainerQueries from "@tailwindcss/container-queries";
 import postcss from "postcss";
-import {
-  ExtractionWarning,
-  createMockComponent,
-  registerCSS,
-  warnings,
-} from "react-native-css-interop/testing-library";
 import tailwind, { Config } from "tailwindcss";
+
+import {
+  render as interopRender,
+  RenderOptions as InteropRenderOptions,
+  resetData,
+  screen,
+  setupAllComponents,
+} from "react-native-css-interop/test-utils";
 import { cssToReactNativeRuntimeOptions } from "./metro/common";
 
-export { createMockComponent } from "react-native-css-interop/testing-library";
+export {
+  createMockComponent,
+  screen,
+  fireEvent,
+} from "react-native-css-interop/test-utils";
 
-export interface RenderTailwindOptions extends RenderOptions {
+export * from "../src/index";
+
+beforeEach(() => {
+  resetData();
+  setupAllComponents();
+});
+
+export interface RenderOptions extends InteropRenderOptions {
   config?: Omit<Config, "content">;
-  base?: boolean;
   css?: string;
-  testID?: string;
-  animated?: boolean;
+  layers?: {
+    base?: boolean;
+    components?: boolean;
+    utilities?: boolean;
+  };
 }
 
 process.env.NATIVEWIND_NATIVE = Platform.OS;
 
-export async function renderTailwind<T extends { className: string }>(
-  component: React.ReactElement<T>,
-  {
-    base = false,
-    // Skip base my default to speed up the tests (as base rarely impacts the tested classes)
-    css = base
-      ? "@tailwind base;@tailwind components;@tailwind utilities;"
-      : "@tailwind components;@tailwind utilities;",
-    config = {},
-    ...options
-  }: RenderTailwindOptions = {},
-): Promise<ReturnType<typeof render>> {
+export async function render(
+  component: React.ReactElement<any>,
+  { config, css, layers = {}, ...options }: RenderOptions = {},
+) {
+  css ??= Object.entries({
+    base: false,
+    components: true,
+    utilities: true,
+    ...layers,
+  }).reduce((acc, [layer, enabled]) => {
+    return enabled ? `${acc}@tailwind ${layer};` : acc;
+  }, "");
+
   let { css: output } = await postcss([
     tailwind({
       theme: {},
@@ -45,22 +61,12 @@ export async function renderTailwind<T extends { className: string }>(
     }),
   ]).process(css, { from: undefined });
 
-  // console.log(output);
-
-  registerCSS(output, cssToReactNativeRuntimeOptions);
-
-  return render(component, options);
+  return interopRender(component, {
+    ...options,
+    css: output,
+    cssOptions: cssToReactNativeRuntimeOptions,
+  });
 }
-
-type Style = ViewStyle & TextStyle & ImageStyle;
-type TestCase = [
-  string,
-  {
-    style?: ReturnType<typeof style>["style"];
-    props?: Record<string, unknown>;
-    warning?: (name: string) => Map<string, ExtractionWarning[]>;
-  },
-];
 
 function getClassNames(
   component: React.ReactElement<any>,
@@ -84,63 +90,56 @@ function getClassNames(
   return classNames;
 }
 
-export const style = (style: Style & Record<string, unknown>) => ({ style });
-export const invalidProperty = (...properties: string[]) => ({
-  warning: (name: string) =>
-    new Map<string, ExtractionWarning[]>([
-      [
-        name,
-        properties.map((property) => ({
-          type: "IncompatibleNativeProperty",
-          property,
-        })),
-      ],
-    ]),
-});
-export const invalidValue = (property: string, value: any) => ({
-  warning: (name: string) =>
-    new Map<string, ExtractionWarning[]>([
-      [name, [{ type: "IncompatibleNativeValue", property, value }]],
-    ]),
-});
+type ClassNameTestCase =
+  | [string, Record<string, any>]
+  | [string, Record<string, any> | undefined, Record<string, any>];
 
-export function testCases(...cases: TestCase[]) {
-  return testCasesWithOptions({}, ...cases);
+/**
+ * Test each className
+ */
+export function testEachClassName(
+  tests: ClassNameTestCase[],
+  options?: RenderOptions,
+) {
+  test.each(tests)(
+    "%s",
+    (
+      className: string,
+      expectedProps?: Record<string, any>,
+      warningOrDone?: Record<string, any> | (() => void),
+    ) => {
+      const promise = new Promise<void>(async (resolve) => {
+        const testID = "nativewind";
+        await render(<View testID={testID} className={className} />, options);
+        const component = screen.getByTestId(testID, { hidden: true });
+
+        for (const [key, expected] of Object.entries(expectedProps ?? {})) {
+          expect(component.props[key]).toEqual(expected);
+        }
+
+        resolve();
+      });
+
+      if (typeof warningOrDone == "function") {
+        warningOrDone();
+      } else {
+        return promise;
+      }
+    },
+  );
 }
 
-export function testCasesWithOptions(
-  {
-    testID = "react-native-css-interop",
-    animated = false,
-    ...options
-  }: RenderTailwindOptions,
-  ...cases: TestCase[]
-) {
-  const A = createMockComponent(View);
+export function invalidProperty(...properties: string[]) {
+  return properties.map((property) => ({
+    type: "IncompatibleNativeProperty",
+    property,
+  }));
+}
 
-  test.each(cases)("%s", async (className, expected) => {
-    await renderTailwind(<A testID={testID} className={className} />, options);
-
-    const component = screen.getByTestId(testID, {
-      includeHiddenElements: true,
-    });
-
-    if (animated) {
-      expect(component).toHaveAnimatedStyle(expected.style as any);
-    } else if (expected.style) {
-      expect(component).toHaveStyle(
-        Object.fromEntries(Object.entries(expected.style)),
-      );
-    }
-
-    if (expected.props) {
-      expect(component.props).toEqual(expect.objectContaining(expected.props));
-    }
-
-    if (expected.warning) {
-      expect(warnings).toEqual(expected.warning(className));
-    } else {
-      expect(warnings).toEqual(new Map());
-    }
-  });
+export function invalidValue(value: Record<string, string>) {
+  return Object.entries(value).map(([property, value]) => ({
+    type: "IncompatibleNativeValue",
+    property,
+    value,
+  }));
 }

@@ -1,22 +1,20 @@
-import { render } from "@testing-library/react-native";
+/** @jsxImportSource react-native-css-interop */
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { View, ViewProps } from "react-native";
 
 import {
-  createMockComponent,
   registerCSS,
-  resetStyles,
-} from "../testing-library";
-import { useSafeAreaEnv } from "../runtime";
+  render,
+  setupAllComponents,
+  useSafeAreaEnv,
+} from "test-utils";
 
 const testID = "react-native-css-interop";
-const A = createMockComponent(View);
-
-beforeEach(() => resetStyles());
+setupAllComponents();
 
 test("safe-area-inset-*", () => {
-  registerCSS(`.my-class { 
-    margin-top: env(safe-area-inset-top); 
+  registerCSS(`.my-class {
+    margin-top: env(safe-area-inset-top);
     margin-bottom: env(safe-area-inset-bottom);
     margin-left: env(safe-area-inset-left);
     margin-right: env(safe-area-inset-right);
@@ -24,7 +22,7 @@ test("safe-area-inset-*", () => {
 
   const SafeView = (props: ViewProps) => {
     const safeAreaEnv = useSafeAreaEnv();
-    return <A testID={testID} {...props} style={safeAreaEnv} />;
+    return <View testID={testID} {...props} style={safeAreaEnv} />;
   };
 
   const component = render(

@@ -2,19 +2,18 @@ import { createElement, forwardRef, useContext, useState } from "react";
 import type {
   CssInterop,
   JSXFunction,
-  ReactComponent,
   RuntimeValueDescriptor,
 } from "../../types";
 import { getNormalizeConfig } from "../config";
-import { colorScheme, variableContext } from "./globals";
 import { Effect, cleanupEffect } from "../observable";
-import { globalStyles } from "./stylesheet";
 import { interop } from "./native-interop";
-import { opaqueStyles } from "./style-store";
-import { getComponentType } from "./utils";
+import { getComponentType } from "./unwrap-components";
+import { VariableContext, getVariable, opaqueStyles } from "./styles";
+import { colorScheme } from "./appearance-observables";
 
 export { StyleSheet } from "./stylesheet";
-export { colorScheme, rem } from "./globals";
+export { colorScheme } from "./appearance-observables";
+export { rem } from "./unit-observables";
 
 export const interopComponents = new Map<
   object | string,
@@ -30,7 +29,7 @@ export const interopComponents = new Map<
 export const cssInterop: CssInterop = (baseComponent, mapping): any => {
   const configs = getNormalizeConfig(mapping);
 
-  let component: ReactComponent;
+  let component: any;
   const type = getComponentType(baseComponent);
 
   /**
@@ -42,7 +41,7 @@ export const cssInterop: CssInterop = (baseComponent, mapping): any => {
       return interop(baseComponent, configs, props, undefined);
     };
   } else {
-    component = forwardRef<unknown, Record<string, any>>((props, ref) => {
+    component = forwardRef((props, ref) => {
       // This function will change className->style, add the extra props and do the "magic"
       return interop(baseComponent, configs, props, ref);
       // `interop` will return createElement(baseComponent, propsWithStylesAppliedAndEventHandlersAdded);
@@ -63,38 +62,30 @@ export const remapProps: CssInterop = (component: any, mapping): any => {
     ref: any,
   ) {
     for (const config of configs) {
-      let rawStyles = [];
-
       const source = props?.[config.source];
 
       // If the source is not a string or is empty, skip this config
       if (typeof source !== "string" || !source) continue;
 
+      const placeholder = {};
+      opaqueStyles.set(placeholder, {
+        $type: "RemappedClassName",
+        classNames: source.split(/\s+/),
+      });
+
       delete props[config.source];
 
-      for (const className of source.split(/\s+/)) {
-        const signal = globalStyles.get(className);
+      let target = props[config.target];
 
-        if (signal !== undefined) {
-          const style = {};
-          const styleRuleSet = signal.get();
-          opaqueStyles.set(style, styleRuleSet);
-          rawStyles.push(style);
-        }
+      if (Array.isArray(target)) {
+        target.push(placeholder);
+      } else if (target) {
+        target = [target, placeholder];
+      } else {
+        target = placeholder;
       }
 
-      if (rawStyles.length !== 0) {
-        const existingStyle = props[config.target];
-
-        if (Array.isArray(existingStyle)) {
-          rawStyles.push(...existingStyle);
-        } else if (existingStyle) {
-          rawStyles.push(existingStyle);
-        }
-
-        props[config.target] =
-          rawStyles.length === 1 ? rawStyles[0] : rawStyles;
-      }
+      props[config.target] = target;
     }
 
     props.ref = ref;
@@ -107,7 +98,7 @@ export const remapProps: CssInterop = (component: any, mapping): any => {
 
 export function useColorScheme() {
   const [effect, setEffect] = useState<Effect>(() => ({
-    rerun: () => setEffect((s) => ({ ...s })),
+    run: () => setEffect((s) => ({ ...s })),
     dependencies: new Set(),
   }));
 
@@ -121,11 +112,11 @@ export function useColorScheme() {
 export function vars(variables: Record<string, RuntimeValueDescriptor>) {
   const style: Record<string, any> = {};
   opaqueStyles.set(style, {
-    $$type: "StyleRuleSet",
+    $type: "StyleRuleSet",
     variables: true,
     normal: [
       {
-        $$type: "StyleRule",
+        $type: "StyleRule",
         specificity: { inline: 1 },
         variables: Object.entries(variables).map(([name, value]) => {
           return [name.startsWith("--") ? name : `--${name}`, value];
@@ -137,14 +128,14 @@ export function vars(variables: Record<string, RuntimeValueDescriptor>) {
 }
 
 export const useUnstableNativeVariable = (name: string) => {
-  const context = useContext(variableContext);
+  const context = useContext(VariableContext);
 
   const [effect, setState] = useState<Effect>(() => ({
-    rerun: () => setState((s) => ({ ...s })),
+    run: () => setState((s) => ({ ...s })),
     dependencies: new Set(),
   }));
 
-  let value = context[name];
+  let value: any = getVariable(name, context, effect);
   if (typeof value === "object" && "get" in value) {
     cleanupEffect(effect);
     value = value.get(effect);
