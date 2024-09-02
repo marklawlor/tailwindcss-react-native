@@ -78,6 +78,17 @@ const nativePlugins = plugin(function ({
     ".invisible": { opacity: 0 },
   } as any);
 
+  addUtilities({
+    ".border-continuous": {
+      "@rn-move -rn-border-curve border-curve": "true",
+      "-rn-border-curve": "continuous",
+    },
+    ".border-circular": {
+      "@rn-move -rn-border-curve border-curve": "true",
+      "-rn-border-curve": "circular",
+    }
+  });
+
   /**
    * move-[]:
    */
@@ -263,6 +274,10 @@ const preset: Config = {
   content: [],
   theme: {
     extend: {
+      borderCurve: {
+        continuous: "continuous",
+        curve: "curve",
+      },
       fontFamily: {
         sans: platformSelect({ android: "san-serif", ios: "'system font'" }),
         serif: platformSelect({ android: "serif", ios: "Georgia" }),
