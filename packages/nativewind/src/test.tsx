@@ -12,7 +12,7 @@ import {
   screen,
   setupAllComponents,
 } from "react-native-css-interop/test";
-import { cssToReactNativeRuntimeOptions } from "./metro/common";
+import { cssToReactNativeRuntimeOptions } from "./metro/common.js";
 
 export {
   act,
@@ -24,7 +24,7 @@ export {
   INTERNAL_SET,
 } from "react-native-css-interop/test";
 
-export * from "./index";
+export * from "./index.js";
 
 const testID = "nativewind";
 
@@ -39,6 +39,7 @@ export type ConfigWithoutContent = {
 };
 
 export interface RenderOptions extends InteropRenderOptions {
+  debugCompiled?: boolean;
   config?: ConfigWithoutContent;
   css?: string;
   layers?: {

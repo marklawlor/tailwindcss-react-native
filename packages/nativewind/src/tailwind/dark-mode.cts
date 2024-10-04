@@ -1,6 +1,6 @@
 import { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
-import { isWeb } from "./common";
+import { isWeb } from "./common.cjs";
 
 export const darkModeAtRule = plugin(function ({ config, addBase }) {
   const darkMode = config<Config["darkMode"]>("darkMode");

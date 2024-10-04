@@ -1,6 +1,6 @@
 import { parse, CommentArray, stringify } from "comment-json";
 import { existsSync, readFileSync, writeFileSync } from "fs";
-import { bold, cyan } from "./picocolors";
+import { bold, cyan } from "./picocolors.js";
 
 export function setupTypeScript(envPath: string) {
   try {

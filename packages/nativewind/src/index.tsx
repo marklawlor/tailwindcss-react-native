@@ -1,4 +1,4 @@
-export { verifyInstallation } from "./doctor";
+export { verifyInstallation } from "./doctor.js";
 
 export {
   StyleSheet,
@@ -12,5 +12,5 @@ export {
   vars,
 } from "react-native-css-interop";
 
-export { useColorScheme } from "./stylesheet";
+export { useColorScheme } from "./stylesheet.js";
 export { createElement } from "react";

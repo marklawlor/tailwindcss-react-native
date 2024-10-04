@@ -67,16 +67,16 @@ export type WithCssInteropOptions = CssToReactNativeRuntimeOptions & {
   input: string;
   platforms?: string[];
   debugNamespace?: string;
-  processPROD: (platform: string) => string | Buffer;
+  processPROD: (platform: string) => Promise<string | Buffer>;
   processDEV: (
     platform: string,
     next: (update: string) => void,
-  ) => Promise<string>;
+  ) => Promise<string | Buffer>;
 };
 
 let haste: any;
 let isWatching = false;
-const virtualModules = new Map<string, Promise<string>>();
+const virtualModules = new Map<string, Promise<string | Buffer>>();
 
 export function withCssInterop(
   config: MetroConfig,
@@ -102,7 +102,7 @@ export function withCssInterop(
    * production files make it into the virtual file tree
    */
   const prodOutputDir = path.join(
-    path.dirname(require.resolve("react-native-css-interop/package.json")),
+    path.dirname(require.resolve("react-native-css-interop")),
     ".cache",
   );
 
@@ -151,10 +151,10 @@ export function withCssInterop(
 
           const output =
             platform === "web"
-              ? options.processPROD(platform).toString("utf-8")
+              ? (await options.processPROD(platform)).toString("utf-8")
               : getNativeJS(
                   cssToReactNativeRuntime(
-                    options.processPROD(platform),
+                    await options.processPROD(platform),
                     options,
                   ),
                   debug,

@@ -6,15 +6,15 @@ import { PluginUtils } from "tailwindcss/types/config";
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 import toColorValue from "tailwindcss/lib/util/toColorValue";
 
-import { hairlineWidth, platformSelect } from "../theme";
-import { darkModeAtRule } from "./dark-mode";
-import { color } from "./color";
-import { verify } from "./verify";
-import { translateX, translateY } from "./translate";
-import { shadows } from "./shadows";
-import { allowedColors } from "./common";
-import { nativeSwitch } from "./switch";
-import { safeArea } from "./safe-area";
+import { hairlineWidth, platformSelect } from "../theme.cjs";
+import { darkModeAtRule } from "./dark-mode.cjs";
+import { color } from "./color.cjs";
+import { verify } from "./verify.cjs";
+import { translateX, translateY } from "./translate.cjs";
+import { shadows } from "./shadows.cjs";
+import { allowedColors } from "./common.cjs";
+import { nativeSwitch } from "./switch.cjs";
+import { safeArea } from "./safe-area.cjs";
 
 const kebabCase = (str: string) => {
   return str.replace(

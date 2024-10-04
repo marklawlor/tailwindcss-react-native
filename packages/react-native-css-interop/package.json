@@ -2,9 +2,36 @@
   "version": "0.1.9",
   "name": "react-native-css-interop",
   "description": "",
-  "main": "dist/index",
-  "types": "dist/index.d.ts",
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./types": {
+      "types": "./types.d.ts"
+    },
+    "./babel": {
+      "default": "./dist/babel.cjs",
+      "types": "./dist/babel.d.ts"
+    },
+    "./metro": {
+      "default": "./dist/metro/index.js",
+      "types": "./dist/metro/index.d.ts"
+    },
+    "./test": {
+      "default": "./dist/test/index.js",
+      "types": "./dist/test/index.d.ts"
+    },
+    "./jsx-runtime": {
+      "default": "./dist/jsx-runtime/index.js",
+      "types": "./dist/jsx-runtime/index.d.ts"
+    },
+    "./jsx-dev-runtime": {
+      "default": "./dist/jsx-runtime/index.js",
+      "types": "./dist/jsx-runtime/index.d.ts"
+    }
+  },
   "keywords": [
     "react-native",
     "react",

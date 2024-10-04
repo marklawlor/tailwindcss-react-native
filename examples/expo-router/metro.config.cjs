@@ -17,14 +17,17 @@ config.resolver.nodeModulesPaths = [
 ];
 
 // 2. Enable NativeWind
-const { withNativeWind } = require("nativewind/metro");
-module.exports = withNativeWind(config, {
-  // 3. Set `input` to your CSS file with the Tailwind at-rules
-  input: "global.css",
-  // This is optional
-  projectRoot,
-  inlineRem: false,
-  features: {
-    transformPercentagePolyfill: true,
-  },
-});
+module.exports = async function () {
+  const { withNativeWind } = await import("nativewind/metro");
+  return withNativeWind(config, {
+    // 3. Set `input` to your CSS file with the Tailwind at-rules
+    input: "global.css",
+    // This is optional
+    projectRoot,
+    unstable_forceVersion: 4,
+    inlineRem: false,
+    features: {
+      transformPercentagePolyfill: true,
+    },
+  });
+};

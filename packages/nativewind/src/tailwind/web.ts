@@ -1,12 +1,12 @@
-import { Config } from "tailwindcss";
+import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
 
-import { darkModeAtRule } from "./dark-mode";
-import { color } from "./color";
-import { verify } from "./verify";
-import { webPropModifierPlugin } from "./prop-modifier";
-import { webSwitch } from "./switch";
-import { allowedColors } from "./common";
+import { darkModeAtRule } from "./dark-mode.cjs";
+import { color } from "./color.cjs";
+import { verify } from "./verify.cjs";
+import { webPropModifierPlugin } from "./prop-modifier.cjs";
+import { webSwitch } from "./switch.cjs";
+import { allowedColors } from "./common.cjs";
 
 const preset: Config = {
   content: [],

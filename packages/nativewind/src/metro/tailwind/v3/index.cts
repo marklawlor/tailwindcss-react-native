@@ -1,9 +1,7 @@
 import { execSync, fork } from "child_process";
 import fs from "fs";
 import path from "path";
-import { type Config } from "tailwindcss";
-import { TailwindCliOptions } from "../types";
-import { Debugger } from "debug";
+import type { TailwindCliOptions, TailwindFactory } from "../types.cjs";
 
 /**
  * Tailwind CLI v3 is not very well suited for programmatic usage.
@@ -30,9 +28,9 @@ const getEnv = (options: TailwindCliOptions) => {
   };
 };
 
-export const tailwindCliV3 = function (debug: Debugger) {
+export const tailwindCli: TailwindFactory = function (debug) {
   return {
-    processPROD(options: TailwindCliOptions) {
+    async processPROD(options) {
       debug("Start production Tailwind CLI");
       const cliLocation = require.resolve("tailwindcss/lib/cli.js");
 
@@ -56,9 +54,7 @@ export const tailwindCliV3 = function (debug: Debugger) {
       debug("Finished production Tailwind CLI");
       return contents;
     },
-    processDEV(
-      options: TailwindCliOptions & { onChange: (css: string) => void },
-    ) {
+    processDEV(options) {
       debug("Start development Tailwind CLI");
       return new Promise<string>((resolve, reject) => {
         try {
@@ -102,27 +98,3 @@ export const tailwindCliV3 = function (debug: Debugger) {
     },
   };
 };
-
-const flattenPresets = (configs: Partial<Config>[] = []): Partial<Config>[] => {
-  if (!configs) return [];
-  return configs.flatMap((config) => [
-    config,
-    ...flattenPresets(config.presets),
-  ]);
-};
-
-export function tailwindConfigV3(path: string) {
-  const config: Config = require("tailwindcss/loadConfig")(path);
-
-  const hasPreset = flattenPresets(config.presets).some((preset) => {
-    return preset.nativewind;
-  });
-
-  if (!hasPreset) {
-    throw new Error(
-      "Tailwind CSS has not been configured with the NativeWind preset",
-    );
-  }
-
-  return config;
-}

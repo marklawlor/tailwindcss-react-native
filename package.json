@@ -18,10 +18,11 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
-    "@tsconfig/react-native": "^3.0.2",
+    "@tailwindcss/cli": "4.0.0-alpha.26",
     "@testing-library/react-native": "^12.0.1",
-    "@types/node": "^22.5.5",
+    "@tsconfig/react-native": "^3.0.2",
     "@types/jest": "^29.5.1",
+    "@types/node": "^22.5.5",
     "@vercel/node": "^2.15.8",
     "eslint": "8.44.0",
     "eslint-config-prettier": "8.8.0",
@@ -33,11 +34,12 @@
     "expect": "^29.7.0",
     "typescript": "^5.4.5",
     "vercel": "^31.2.2",
-    "tailwindcss": "3.4.4"
+    "tailwindcss": "4.0.0-alpha.26"
   },
   "overrides": {
     "@expo/metro-runtime": "3.2.3",
     "react-native": "0.75.2",
-    "react-native-reanimated": "3.10.1"
+    "react-native-reanimated": "3.10.1",
+    "tailwindcss": "4.0.0-alpha.26"
   }
 }

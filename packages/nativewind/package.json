@@ -1,10 +1,37 @@
 {
   "version": "4.1.10",
   "name": "nativewind",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.js",
   "description": "Use Tailwindcss in your cross-platform React Native applications",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./babel": {
+      "default": "./dist/babel.cjs",
+      "types": "./dist/babel.d.ts"
+    },
+    "./metro": {
+      "default": "./dist/metro/index.js",
+      "types": "./dist/metro/index.d.ts"
+    },
+    "./preset": {
+      "default": "./dist/tailwind/index.cjs",
+      "types": "./dist/tailwind/index.d.ts"
+    },
+    "./jsx-runtime": {
+      "default": "./jsx-runtime/index.js",
+      "types": "./jsx-runtime/index.d.ts"
+    },
+    "./jsx-dev-runtime": {
+      "default": "./jsx-runtime/index.js",
+      "types": "./jsx-runtime/index.d.ts"
+    }
+  },
   "keywords": [
     "react-native",
     "react",

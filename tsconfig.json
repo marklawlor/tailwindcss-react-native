@@ -2,6 +2,9 @@
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "target": "esnext",
+    "module": "NodeNext",
+    "resolveJsonModule": true,
+    "moduleResolution": "NodeNext",
     "declaration": true,
     "noUnusedLocals": true,
     "removeComments": true,

@@ -2,8 +2,14 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
+    "rootDir": "src",
     "noEmit": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "paths": {
+      "tailwindcss4": [
+        "../../node_modules/tailwindcss4"
+      ]
+    }
   },
   "include": [
     "src/**/*",

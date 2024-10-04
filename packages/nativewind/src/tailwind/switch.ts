@@ -25,18 +25,18 @@ export const nativeSwitch = plugin(function ({ matchUtilities, theme }) {
 export const webSwitch = plugin(function ({
   matchUtilities,
   theme,
-  corePlugins,
+  // corePlugins,
 }) {
   matchUtilities(
     {
       thumb: (value) => {
-        if (!corePlugins("backgroundOpacity")) {
-          return {
-            "& > div:nth-child(2)": {
-              backgroundColor: toColorValue(value) + " !important",
-            },
-          };
-        }
+        // if (!corePlugins("backgroundOpacity")) {
+        //   return {
+        //     "& > div:nth-child(2)": {
+        //       backgroundColor: toColorValue(value) + " !important",
+        //     },
+        //   };
+        // }
 
         const output = withAlphaVariable({
           color: value,

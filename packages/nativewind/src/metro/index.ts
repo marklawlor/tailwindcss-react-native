@@ -1,17 +1,20 @@
 import type { MetroConfig } from "metro-config";
-import { debug as debugFn } from "debug";
+import debugPkg from "debug";
 import path from "path";
 import {
   withCssInterop,
   WithCssInteropOptions,
 } from "react-native-css-interop/metro";
 
-import { cssToReactNativeRuntimeOptions } from "./common";
-import { tailwindCli, tailwindConfig } from "./tailwind";
-import { setupTypeScript } from "./typescript";
+import { cssToReactNativeRuntimeOptions } from "./common.js";
+import { tailwindCli, tailwindConfig } from "./tailwind/index.js";
+import { setupTypeScript } from "./typescript.js";
+
+const { debug: debugFn } = debugPkg;
 
 interface WithNativeWindOptions extends WithCssInteropOptions {
   input: string;
+  unstable_forceVersion?: 3 | 4;
   projectRoot?: string;
   outputDir?: string;
   configPath?: string;
@@ -45,7 +48,7 @@ export function withNativeWind(
 
   debug(`important: ${important}`);
 
-  const cli = tailwindCli(debug);
+  const cli = tailwindCli(debug, options.unstable_forceVersion);
 
   if (!disableTypeScriptGeneration) {
     debug(`checking TypeScript setup`);
@@ -59,18 +62,22 @@ export function withNativeWind(
     selectorPrefix: typeof important === "string" ? important : undefined,
     debugNamespace: "nativewind",
     input,
-    processPROD: (platform) => {
+    processPROD: async (platform) => {
       debug(`processPROD: ${platform}`);
-      return cli.processPROD({
+      const { processPROD } = await cli;
+      return processPROD({
+        cwd: process.cwd(),
         platform,
         input,
         browserslist,
         browserslistEnv,
       });
     },
-    processDEV: (platform, onChange) => {
+    processDEV: async (platform, onChange) => {
       debug(`processDEV: ${platform}`);
-      return cli.processDEV({
+      const { processDEV } = await cli;
+      return processDEV({
+        cwd: process.cwd(),
         platform,
         input,
         browserslist,
