@@ -7,6 +7,7 @@ export const featureFlags = {
   disableDisplayBlock: "<0.74",
   disableAlignContentEvenly: "<0.74",
   disablePositionStatic: "<0.74",
+  backgroundImageGradients: ">=0.76",
 };
 
 export type FeatureFlagStatus = Partial<

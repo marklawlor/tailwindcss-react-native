@@ -62,6 +62,10 @@ export function resolveValue(
       }
     }
 
+    if (!Array.isArray(descriptor)) {
+      return descriptor;
+    }
+
     const [, name, descriptorArgs = []] = descriptor;
 
     const cast = (value: RuntimeValueDescriptor) => {

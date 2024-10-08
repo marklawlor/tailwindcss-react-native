@@ -43,6 +43,10 @@ import type {
   Translate,
   Scale,
   UnresolvedColor,
+  Image,
+  Gradient,
+  GradientItemFor_DimensionPercentageFor_LengthValue,
+  LineDirection,
 } from "lightningcss";
 
 import type {
@@ -51,6 +55,7 @@ import type {
   RuntimeFunction,
 } from "../types";
 import { FeatureFlagStatus } from "./feature-flags";
+import { BackgroundImage } from "../rn-types";
 
 const unparsedPropertyMapping: Record<string, string> = {
   "margin-inline-start": "margin-start",
@@ -107,6 +112,7 @@ const validProperties = [
   "animation-timing-function",
   "aspect-ratio",
   "background-color",
+  "background-image",
   "block-size",
   "border",
   "border-block",
@@ -405,6 +411,11 @@ export function parseDeclaration(
       return addStyleProp(
         declaration.property,
         parseColor(declaration.value, parseOptions),
+      );
+    case "background-image":
+      return addStyleProp(
+        declaration.property,
+        parseImages(declaration.value, parseOptions),
       );
     case "opacity":
       return addStyleProp(declaration.property, declaration.value);
@@ -2919,5 +2930,120 @@ export function parseUnresolvedColor(
       return undefined;
     default:
       color satisfies never;
+  }
+}
+
+function parseImages(
+  images: Image[],
+  options: ParseDeclarationOptionsWithValueWarning,
+) {
+  const backgrounds: BackgroundImage[] = [];
+
+  for (const image of images) {
+    switch (image.type) {
+      case "url":
+        backgrounds.push(image.value.url);
+        break;
+      case "none":
+        break;
+      case "image-set":
+        options.addValueWarning(image.type);
+        break;
+      case "gradient":
+        const background = parseGradient(image.value, options);
+        if (background) {
+          backgrounds.push(background);
+        }
+        break;
+      default:
+        image satisfies never;
+    }
+  }
+
+  return backgrounds;
+}
+
+function parseGradient(
+  gradient: Gradient,
+  options: ParseDeclarationOptionsWithValueWarning,
+): Extract<BackgroundImage, { type: "linearGradient" }> | undefined {
+  switch (gradient.type) {
+    case "repeating-linear":
+    case "radial":
+    case "repeating-radial":
+    case "conic":
+    case "repeating-conic":
+    case "webkit-gradient":
+      return;
+    case "linear":
+      return {
+        type: "linearGradient",
+        direction: parseLineDirection(gradient.direction),
+        colorStops: parseGradientItemForDimensionPercentageForLengthValue(
+          gradient.items,
+          options,
+        ),
+      };
+    default:
+      gradient satisfies never;
+  }
+}
+
+function parseGradientItemForDimensionPercentageForLengthValue(
+  items: GradientItemFor_DimensionPercentageFor_LengthValue[],
+  options: ParseDeclarationOptionsWithValueWarning,
+): Extract<BackgroundImage, { type: "linearGradient" }>["colorStops"] {
+  const colors: Map<string, number[]> = new Map();
+
+  for (const item of items) {
+    switch (item.type) {
+      case "color-stop":
+        const color = parseColor(item.color, options);
+
+        if (!color) continue;
+
+        let positions = colors.get(color);
+
+        if (!positions) {
+          positions = [];
+          colors.set(color, positions);
+        }
+
+        if (item.position) {
+          const position = parseDimensionPercentageFor_LengthValue(
+            item.position,
+            options,
+          );
+
+          if (typeof position === "number") {
+            positions.push(position);
+          }
+        }
+      case "hint":
+        continue;
+      default:
+        item satisfies never;
+    }
+  }
+
+  return [...colors].map(([color, positions]) => {
+    return {
+      color,
+      positions,
+    };
+  });
+}
+
+function parseLineDirection(direction: LineDirection) {
+  switch (direction.type) {
+    case "angle":
+      return `${direction.value.value}${direction.value.type}`;
+    case "horizontal":
+    case "vertical":
+      return `to ${direction.value}`;
+    case "corner":
+      return `to ${direction.vertical} ${direction.horizontal}`;
+    default:
+      direction satisfies never;
   }
 }

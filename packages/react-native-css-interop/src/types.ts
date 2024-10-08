@@ -22,6 +22,7 @@ import type { SharedValue } from "react-native-reanimated";
 import type { SharedState } from "./runtime/native/types";
 import type { FeatureFlagStatus } from "./css-to-rn/feature-flags";
 import { StyleRuleSetSymbol, StyleRuleSymbol } from "./shared";
+import { BackgroundImage } from "./rn-types";
 
 export interface Effect2 {
   update: () => void;
@@ -265,6 +266,7 @@ export type RuntimeValueDescriptor =
   | boolean
   | undefined
   | RuntimeFunction
+  | BackgroundImage
   | RuntimeValueDescriptor[];
 
 export type RuntimeFunction =
