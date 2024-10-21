@@ -43,6 +43,9 @@ import type {
   Translate,
   Scale,
   UnresolvedColor,
+  Position,
+  PositionComponentFor_HorizontalPositionKeyword,
+  PositionComponentFor_VerticalPositionKeyword,
 } from "lightningcss";
 
 import type {
@@ -239,6 +242,7 @@ const validProperties = [
   "text-transform",
   "top",
   "transform",
+  "transform-origin",
   "transition",
   "transition-delay",
   "transition-duration",
@@ -1474,6 +1478,12 @@ export function parseDeclaration(
         }
       }
       return;
+    }
+    case "transform-origin": {
+      return addStyleProp(
+        "transform-origin",
+        parseTransformOrigin(declaration.value, parseOptions),
+      );
     }
     case "translate":
       addStyleProp(
@@ -2933,3 +2943,48 @@ export function parseUnresolvedColor(
 }
 
 const unparsedRuntimeFn = new Set(["text-shadow"]);
+
+function parseTransformOrigin(
+  position: Position,
+  options: ParseDeclarationOptionsWithValueWarning,
+): RuntimeValueDescriptor {
+  /**
+   * NOTE: transform-origin supports a third Z value, but lightningcss does not parse it correctly
+   */
+  const x = parsePositionComponentFor_PositionKeyword(position.x, options);
+  const y = parsePositionComponentFor_PositionKeyword(position.y, options);
+  return [x, y];
+}
+
+function parsePositionComponentFor_PositionKeyword(
+  position:
+    | PositionComponentFor_HorizontalPositionKeyword
+    | PositionComponentFor_VerticalPositionKeyword,
+  options: ParseDeclarationOptionsWithValueWarning,
+): RuntimeValueDescriptor {
+  switch (position.type) {
+    case "center":
+      return "50%";
+    case "side":
+      if (position.offset) {
+        return parseLength(position.offset, options);
+      }
+
+      switch (position.side) {
+        case "left":
+          return "0%";
+        case "right":
+          return "100%";
+        case "top":
+          return "0%";
+        case "bottom":
+          return "100%";
+        default:
+          position satisfies never;
+      }
+    case "length":
+      return parseLength(position.value, options);
+    default:
+      position satisfies never;
+  }
+}

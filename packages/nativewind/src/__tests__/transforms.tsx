@@ -452,57 +452,90 @@ describe("Transforms - Mixed", () => {
 
   describe("Transforms - Transform Origin", () => {
     test("origin-center", async () => {
-      expect(await renderCurrentTest()).toStrictEqual({
-        props: {},
-        invalid: { properties: ["transform-origin"] },
+      expect(
+        await renderCurrentTest({
+          layers: {
+            base: false,
+          },
+        }),
+      ).toStrictEqual({
+        props: {
+          style: {
+            transform: [{ transformOrigin: ["50%", "50%"] }],
+          },
+        },
       });
     });
     test("origin-top", async () => {
       expect(await renderCurrentTest()).toStrictEqual({
-        props: {},
-        invalid: { properties: ["transform-origin"] },
+        props: {
+          style: {
+            transform: [{ transformOrigin: ["50%", "0%"] }],
+          },
+        },
       });
     });
     test("origin-top-right", async () => {
       expect(await renderCurrentTest()).toStrictEqual({
-        props: {},
-        invalid: { properties: ["transform-origin"] },
+        props: {
+          style: {
+            transform: [{ transformOrigin: ["100%", "0%"] }],
+          },
+        },
       });
     });
     test("origin-right", async () => {
       expect(await renderCurrentTest()).toStrictEqual({
-        props: {},
-        invalid: { properties: ["transform-origin"] },
+        props: {
+          style: {
+            transform: [{ transformOrigin: ["100%", "50%"] }],
+          },
+        },
       });
     });
     test("origin-bottom-right", async () => {
       expect(await renderCurrentTest()).toStrictEqual({
-        props: {},
-        invalid: { properties: ["transform-origin"] },
+        props: {
+          style: {
+            transform: [{ transformOrigin: ["100%", "100%"] }],
+          },
+        },
       });
     });
     test("origin-bottom", async () => {
       expect(await renderCurrentTest()).toStrictEqual({
-        props: {},
-        invalid: { properties: ["transform-origin"] },
+        props: {
+          style: {
+            transform: [{ transformOrigin: ["50%", "100%"] }],
+          },
+        },
       });
     });
     test("origin-bottom-left", async () => {
       expect(await renderCurrentTest()).toStrictEqual({
-        props: {},
-        invalid: { properties: ["transform-origin"] },
+        props: {
+          style: {
+            transform: [{ transformOrigin: ["0%", "100%"] }],
+          },
+        },
       });
     });
     test("origin-left", async () => {
       expect(await renderCurrentTest()).toStrictEqual({
-        props: {},
-        invalid: { properties: ["transform-origin"] },
+        props: {
+          style: {
+            transform: [{ transformOrigin: ["0%", "50%"] }],
+          },
+        },
       });
     });
     test("origin-top-left", async () => {
       expect(await renderCurrentTest()).toStrictEqual({
-        props: {},
-        invalid: { properties: ["transform-origin"] },
+        props: {
+          style: {
+            transform: [{ transformOrigin: ["0%", "0%"] }],
+          },
+        },
       });
     });
   });
