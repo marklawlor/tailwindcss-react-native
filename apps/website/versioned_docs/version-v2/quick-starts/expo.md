@@ -60,7 +60,7 @@ module.exports = function (api) {
 
 ## Expo Web
 
-When running on web, NativeWind is a compatability layer between [Tailwind CSS](http://www.tailwindcss.com) and React Native.
+When running on web, NativeWind is a compatibility layer between [Tailwind CSS](http://www.tailwindcss.com) and React Native.
 
 You will need follow a [Tailwind CSS installation guide](https://tailwindcss.com/docs/installation) and ensure NativeWind is transpiled.
 
