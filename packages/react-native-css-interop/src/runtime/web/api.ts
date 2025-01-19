@@ -26,7 +26,7 @@ export const cssInterop: CssInterop = (baseComponent, mapping): any => {
     { ...props }: Record<string, any>,
     ref: any,
   ) {
-    if (props.cssInterop === false) {
+    if (props.cssInterop === false || typeof props.style === "function") {
       return createElement(baseComponent, props);
     }
 
