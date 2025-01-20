@@ -10,7 +10,7 @@ Use this documentation and [this diagram](https://link.excalidraw.com/l/398AFcdY
 
 ## What can I contribute to?
 
-Before delving deeper into the collaboration worflow, let's talk about what kind of contributions can be made. Make sure you've reviewed the above diagram to understand how various aspects of NativeWind function.
+Before delving deeper into the collaboration workflow, let's talk about what kind of contributions can be made. Make sure you've reviewed the above diagram to understand how various aspects of NativeWind function.
 
 There are three main things you can usually contribute to:
 
@@ -39,7 +39,7 @@ When opening an issue, it's crucial to provide a reproduction of the problem to 
 #### Reproduction Templates
 
 - **StackBlitz template**: [NativeWind Test on StackBlitz](https://stackblitz.com/edit/nativewind-test?view=editor)
-- **Create Expo Stack template**: 
+- **Create Expo Stack template**:
   - `npx create-expo-stack@latest --nativewind`
   - `npx create-expo-stack@latest --nativewind --expo-router`
 
