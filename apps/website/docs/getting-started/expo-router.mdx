@@ -18,6 +18,8 @@ import Tailwind from "./_tailwind.mdx";
 
 ### 3. Add the Babel preset
 
+Add the following configuration to your [`babel.config.js`](https://docs.expo.dev/versions/latest/config/babel/) file. If you are using Expo SDK 52 or above, generate this file by running `npx expo customize babel.config.js`.
+
 <Tabs>
   <TabItem value="SDK 50+">
     ```js title="babel.config.js"
@@ -54,7 +56,7 @@ import Tailwind from "./_tailwind.mdx";
 
 ### 4. Modify your metro.config.js
 
-If your project does not have a `metro.config.js` run `npx expo customize metro.config.js`
+If your project does not have a [`metro.config.js`](https://docs.expo.dev/guides/customizing-metro/) run `npx expo customize metro.config.js`.
 
 <Tabs>
 <TabItem value="SDK 50+">
@@ -86,7 +88,7 @@ module.exports = withNativeWind(config, { input: "./global.css" });
 
 ### 5. Import your CSS file
 
-```js title="app/_layout.js"
+```tsx title="app/_layout.tsx"
 import { Slot } from "expo-router";
 
 // Import your global CSS file
