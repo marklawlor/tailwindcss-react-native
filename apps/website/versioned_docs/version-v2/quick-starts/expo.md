@@ -56,6 +56,16 @@ module.exports = function (api) {
 
 ```
 
+## 4. Typescript
+
+If your project uses typescript, you'll need to reference the nativewind types in a declaration file in the root of your project folder:
+
+```
+/** index.d.ts */
+
+/// <reference types="nativewind/types" />
+```
+
 <StartCoding />
 
 ## Expo Web
