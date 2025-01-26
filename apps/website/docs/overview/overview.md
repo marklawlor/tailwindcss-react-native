@@ -132,14 +132,14 @@ const StyledCircle = cssInterop(Circle, {
 
 export function BoldText(props) {
   return (
-    <Svg className="w-1/2 h-1/2" viewBox="0 0 100 100">
+    <StyledSVG className="w-1/2 h-1/2" viewBox="0 0 100 100">
       <StyledCircle
         className="fill-green-500 stroke-blue-500 stroke-2"
         cx="50"
         cy="50"
         r="45"
       />
-    </Svg>
+    </StyledSVG>
   );
 }
 ```
