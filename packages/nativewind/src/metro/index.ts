@@ -11,7 +11,7 @@ import { cssToReactNativeRuntimeOptions } from "./common";
 import { tailwindCli, tailwindConfig } from "./tailwind";
 import { setupTypeScript } from "./typescript";
 
-interface WithNativeWindOptions extends WithCssInteropOptions {
+interface WithNativeWindOptions extends Partial<WithCssInteropOptions> {
   input: string;
   projectRoot?: string;
   outputDir?: string;
