@@ -1,0 +1,30 @@
+import TabItem from "@theme/TabItem";
+import Tabs from "@theme/Tabs";
+
+# Nx
+
+NativeWind can be used in an Nx Monorepo that is already configured to use Expo and the corresponding plugin [@nx/expo](https://nx.dev/nx-api/expo)
+
+## 1. Prerequisite
+
+Simply configure your Expo project in Nx as per [the Expo setup guide](expo-router)
+
+:::info
+
+Skip the `metro.config.js` setup as we will address this part here.
+
+:::
+
+## 2. Modify your metro.config.js
+
+Add the NativeWind plugin to your `metro.config.js` using a promise chain as shown below:
+
+```js title="metro.config.js"
+const { withNativeWind } = require("nativewind/metro");
+
+// ... existing Nx configuration
+
+module.exports = withNxMetro(mergeConfig(defaultConfig, customConfig), {
+  // ... existing Nx config
+}).then((config) => withNativeWind(config, { input: "./global.css" }));
+```

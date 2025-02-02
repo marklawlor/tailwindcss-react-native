@@ -33,6 +33,7 @@ const sidebars = {
         "getting-started/react-native",
         "getting-started/expo-router",
         "getting-started/nextjs",
+        "getting-started/nx",
         "getting-started/typescript",
         "getting-started/other-bundlers",
       ],
@@ -47,7 +48,7 @@ const sidebars = {
         "guides/third-party-components",
         "guides/themes",
         "guides/editor-setup",
-        "guides/component-libraries"
+        "guides/component-libraries",
       ],
     },
     {
