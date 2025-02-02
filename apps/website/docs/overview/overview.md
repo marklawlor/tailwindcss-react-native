@@ -105,7 +105,7 @@ import { cssInterop } from "nativewind";
 import { Svg, Circle } from "react-native-svg";
 
 /**
- * Circle uses `height`/`width` props on native and className on web
+ * Svg uses `height`/`width` props on native and className on web
  */
 const StyledSVG = cssInterop(Svg, {
   className: {
