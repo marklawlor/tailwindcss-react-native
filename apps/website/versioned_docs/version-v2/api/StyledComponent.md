@@ -4,7 +4,7 @@ title: StyledComponent
 sidebar_label: <StyledComponent />
 ---
 
-`StyledComponent` is the component version of [`styled`](/v2//api/styled) accepts your component as a prop.
+`StyledComponent` is the component version of [`styled`](./styled.md) accepts your component as a prop.
 
 `StyledComponent` will pass all props to your component, except for `tw` and `className` which it will convert into StyledSheet objects and will pass them to your component via the `style` prop.
 

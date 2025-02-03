@@ -2,7 +2,7 @@
 
 Start writing code!
 
-Without the Babel transform you will need to wrap your components in the [styled higher-order component](/v2/api/styled)
+Without the Babel transform you will need to wrap your components in the [styled higher-order component](./api/styled.md)
 
 ```diff
 import { StatusBar } from 'expo-status-bar';
