@@ -20,6 +20,25 @@ If you are 100% your files are covered by `content`, try running
 
 This will generate a `output.css` file with your projects styles written as `css`. Verify that it includes your expected styles (it may include extra styles).
 
+### Using NativeWind with Nx
+If you are using Nx, you need to include the path to your lib code.
+```diff
+// tailwind.config.js
+
+module.exports = {
+- content: [],
++ content: [
++   "./App.{js,jsx,ts,tsx}",
++   "./<custom-folder>/**/*.{js,jsx,ts,tsx}"
++   "../../libs/<lib-folder>/<custom-folder>/**/*.{js,jsx,ts,tsx}",
++ ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
 ### Manually generate the output
 
 Follow the [Native Tailwind CLI setup guide](https://www.nativewind.dev/guides/cli-native#native) to generate `nativewind-output.js`. This file includes the generated NativeWind styles.
