@@ -9,6 +9,7 @@ import {
   Pressable,
   SafeAreaView,
   ScrollView,
+  SectionList,
   StatusBar,
   Switch,
   Text,
@@ -50,6 +51,12 @@ remapProps(FlatList, {
   ListFooterComponentClassName: "ListFooterComponentStyle",
   ListHeaderComponentClassName: "ListHeaderComponentStyle",
   columnWrapperClassName: "columnWrapperStyle",
+  contentContainerClassName: "contentContainerStyle",
+});
+remapProps(SectionList, {
+  className: "style",
+  ListFooterComponentClassName: "ListFooterComponentStyle",
+  ListHeaderComponentClassName: "ListHeaderComponentStyle",
   contentContainerClassName: "contentContainerStyle",
 });
 remapProps(ImageBackground, {
