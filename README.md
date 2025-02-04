@@ -84,7 +84,7 @@ It's worth noting that we do not have Github branches that directly correlate to
 # FAQ
 
 ## Is it safe to use v4?
-It's reasonably safe to use the `canary` version save for a known issue with styles being inconsistently applied. This issue is resolved in the `next` version; however, using this dist tag may break your app as it is considered experimental. To see which versions correlate to these dist tags, please refer to [our npm distrbution tags](https://github.com/nativewind/nativewind?tab=readme-ov-file#npm-distribution-tags).
+It's reasonably safe to use the `canary` version save for a known issue with styles being inconsistently applied. This issue is resolved in the `next` version; however, using this dist tag may break your app as it is considered experimental. To see which versions correlate to these dist tags, please refer to [our npm distribution tags](https://github.com/nativewind/nativewind?tab=readme-ov-file#npm-distribution-tags).
 
 ## Is NativeWind moving to Expo?
 
@@ -92,7 +92,7 @@ No. Expo is always exploring ways to handle styles better but NativeWind, as a p
 
 ## Can we disable the change that was done recently to auto-add nativewind types using a setting or something? I already have the settings using `compilerOptions.types`, so I would like to disable the file generation.
 
-Not at the moment. We've found this will cause a long term problem where people "forget" what their type config was doing. They then update their types and break the NativeWind ones. To combat this, we've copied the behavior from other major frameworks which is to handle their types seperately from user specified ones.
+Not at the moment. We've found this will cause a long term problem where people "forget" what their type config was doing. They then update their types and break the NativeWind ones. To combat this, we've copied the behavior from other major frameworks which is to handle their types separately from user specified ones.
 
 In the future, we may add an option like `dangerouslyDisableTypeScriptGeneration` or something verbose to prevent people from using it. We are tired of solving TypeScript issues, particularly ones such as "my types were working and now they aren't."
 
