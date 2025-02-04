@@ -1,4 +1,4 @@
-const isNative = Boolean(process.env.NATIVEWIND_OS);
+import { isWeb } from "./tailwind/common";
 
 export const {
   hairlineWidth,
@@ -10,6 +10,6 @@ export const {
   roundToNearestPixel,
   platformColor,
   getPixelSizeForLayoutSize,
-} = isNative
-  ? require("react-native-css-interop/css-to-rn/functions")
-  : require("react-native-css-interop/css-to-rn/functions-web");
+} = isWeb
+  ? require("react-native-css-interop/css-to-rn/functions-web")
+  : require("react-native-css-interop/css-to-rn/functions");
